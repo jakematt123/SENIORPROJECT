@@ -3,6 +3,7 @@ import Navbar from "./_components/navbar"
 import React from "react";
 
 
+
 function Home() {
     const handleClick = () => {
         alert("Button works")
@@ -12,12 +13,13 @@ function Home() {
         { text: 'Home', url: '/' },
         { text: 'About', url: '/about' },
         { text: 'Contact', url: '/contact' },
-        { text: 'Login', url: '/login'}
+        { text: 'Login', url: '/login'},
+        { text: 'Store', url: '/store'}
     ];
 
     return (
         <div>
-            <Navbar title="I hate everyone" links={navLinks}/>
+            <Navbar links={navLinks}/>
             <h1>Hello This is a test</h1>
             <br/>
             <ol>
