@@ -22,10 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider cookies={cookies().toString()}>
-          {children}
-        </TRPCReactProvider>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            {children}
+          </TRPCReactProvider>
       </body>
     </html>
+    
   );
 }
