@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { IconButton } from '@material-tailwind/react';
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
@@ -10,8 +10,8 @@ interface NavbarProps {
 // Navbar component
 const Navbar: React.FC<NavbarProps> = ({ links }) => {
 
-  const [search, setSearch ] = useState("")
-  const onChange = ({ target }: any) => setSearch(target.value)
+  const [search, setSearch ] = useState<string>("")
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)
 
   const OnPress = () => {
     alert(search)
@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ links }) => {
             <input 
               type="search"
               value={search}
-              onInput={onChange}
+              onChange={onChange}
               placeholder='Search Amazoon'
               className='rounded py-2 px-4 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-600 w-full border border-gray-300'
               style={{ width: '1300px' }}
