@@ -1,5 +1,5 @@
-'use client'
-import Navbar from "./_components/navbar"
+"use client"
+import Topnavbar from "./_components/Topnavbar"
 import React from "react";
 
 
@@ -9,17 +9,9 @@ function Home() {
         alert("Button works")
     }
 
-    const navLinks = [
-        { text: 'Home', url: '/' },
-        { text: 'About', url: '/about' },
-        { text: 'Contact', url: '/contact' },
-        { text: 'Login', url: '/login'},
-        { text: 'Store', url: '/store'}
-    ];
-
     return (
         <div>
-            <Navbar links={navLinks}/>
+            <Topnavbar/>
             <h1>Hello This is a test</h1>
             <br/>
             <ol>
