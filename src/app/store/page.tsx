@@ -1,23 +1,15 @@
 "use client"
 import React from 'react';
 import { Input, Card, Button } from '@material-tailwind/react';
-import Navbar from '../_components/navbar';
+import Topnavbar from '../_components/Topnavbar';
 
 
 
 const Home: React.FC = () => {
 
-    const navLinks = [
-        { text: 'Home', url: '/' },
-        { text: 'About', url: '/about' },
-        { text: 'Contact', url: '/contact' },
-        { text: 'Login', url: '/login'},
-        { text: 'Store', url: '/store'}
-    ];
-
   return (
     <div className="bg-gray-100 min-h-screen">
-        <Navbar links={navLinks}></Navbar>
+        <Topnavbar/>
 
       {/* Main Content */}
       <main className="p-4">
