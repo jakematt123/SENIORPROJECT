@@ -1,5 +1,6 @@
 "use client"
-import Topnavbar from "./_components/Topnavbar"
+import Banner from "./_components/Banner";
+import Navbar from "./_components/Navbar"
 import React from "react";
 
 
@@ -11,16 +12,8 @@ function Home() {
 
     return (
         <div>
-            <Topnavbar/>
-            <h1>Hello This is a test</h1>
-            <br/>
-            <ol>
-                <li><em>Wow I am bad at html</em></li>
-                <li>Yes you are jake</li>
-            </ol>
-            <br/>
-            <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" onClick={handleClick}>Testing :L</button>
-        
+            <Navbar/>
+            <Banner/>    
         </div>
         
     )

@@ -1,5 +1,4 @@
 import React from "react";
-import { FaAngleRight } from "react-icons/fa";
 
 const SideBarContent = ({title, one, two, three, four, five}) => {
     return (

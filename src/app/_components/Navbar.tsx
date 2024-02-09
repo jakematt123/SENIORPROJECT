@@ -6,15 +6,20 @@ import { LiaMapMarkerAltSolid } from "react-icons/lia";
 import { FaShoppingCart } from "react-icons/fa";
 import Bottomnavbar from "./Bottomnavbar";
 import { useRouter } from "next/navigation";
-const logo = "RaysLogoTransparent.png"
+import Image from "next/image";
+const logo = "/RaysLogoTransparent.png"
 const location = "Tampa, FL"
 
-const Topnavbar: React.FC = () => {
+const Navbar: React.FC = () => {
+    // State for dropdown
     const [showDropdown, setShowDropdown] = useState(false);
+    // State for search
     const [search, setSearch] = useState<string>("");
+    // Router
     const router = useRouter();
 
-    function searchAlert(search: string): void {
+    // Do something with search here
+    function searchAction(search: string): void {
         if(!search.length) {
             router.push("/contact");
         } else {
@@ -23,11 +28,17 @@ const Topnavbar: React.FC = () => {
         
     }
 
+    // This is probably not needed just keeps routing organized
+    function route(route: string): void {
+        router.push(route); 
+    }
+
     return (
         <div className="w-full">
             <div className="bg-amazon_blue text-white px-4 py-3 flex item-center gap-4">
-                <div className="px-2 overflow-hidden flex items-center border-2 border-amazon_light hover:border-white cursor-pointer duration-100 bg-gradient-to-r from-amazon_blue to-amazon_light">
-                    <img className="w-24 h-9 object-scale-down" src={logo} alt="Logo"/>
+                {/* Logo Div */}
+                <div onClick={()=> route("/")} className="px-2 overflow-hidden flex items-center border-2 border-amazon_light hover:border-white cursor-pointer duration-100 bg-gradient-to-r from-amazon_blue to-amazon_light">
+                    <Image className="w-24 h-9 object-scale-down" src={logo} width={595} height={439} alt="Logo"/>
                 </div>
                 <div className="headerHover">
                     <LiaMapMarkerAltSolid />
@@ -63,11 +74,11 @@ const Topnavbar: React.FC = () => {
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Search here..."
                     />
-                    <span onClick={()=>searchAlert(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
+                    <span onClick={()=>searchAction(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
                         <IoSearch />
                     </span>
                 </div>
-                <div className="flex flex-col items-start justify-center headerHover">
+                <div onClick={() => route("/login")} className="flex flex-col items-start justify-center headerHover">
                     <p className="text-xs text-lightText font-light">Hello, sign in</p>
                     <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
                         Account & Lists&nbsp; 
@@ -95,4 +106,4 @@ const Topnavbar: React.FC = () => {
     )
 }
 
-export default Topnavbar;
+export default Navbar;
