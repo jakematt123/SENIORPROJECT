@@ -43,8 +43,7 @@ const LoginPage: React.FC = () => {
                         id="username"
                         type="text"
                         value={username}
-                        onChange={handleUsernameChange}
-                    />
+                        onChange={handleUsernameChange} />
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -55,8 +54,7 @@ const LoginPage: React.FC = () => {
                         id="password"
                         type="password"
                         value={password}
-                        onChange={handlePasswordChange}
-                    />
+                        onChange={handlePasswordChange} />
                 </div>
                 <div className="flex items-center justify-between">
                     <button

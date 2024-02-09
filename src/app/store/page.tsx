@@ -1,7 +1,8 @@
 "use client"
 import React from 'react';
-import { Input, Card, Button } from '@material-tailwind/react';
-import Topnavbar from '../_components/Topnavbar';
+import { Card, Button } from '@material-tailwind/react';
+import Topnavbar from '../_components/Navbar';
+import Image from 'next/image';
 
 
 
@@ -18,10 +19,12 @@ const Home: React.FC = () => {
         {/* Product Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Card placeholder={undefined}>
-            <img
+            <Image
               src="/product1.jpg"
               alt="Product 1"
               className="object-cover w-full h-40"
+              width={500}
+              height={500}
             />
             <div className="p-4">
               <h3 className="text-lg font-bold mb-2">Product 1</h3>
@@ -35,10 +38,12 @@ const Home: React.FC = () => {
             </div>
           </Card>
           <Card placeholder={undefined}>
-            <img
+            <Image
               src="/product2.jpg"
               alt="Product 2"
               className="object-cover w-full h-40"
+              width={500}
+              height={500}
             />
             <div className="p-4">
               <h3 className="text-lg font-bold mb-2">Product 2</h3>
@@ -52,10 +57,12 @@ const Home: React.FC = () => {
             </div>
           </Card>
           <Card placeholder={undefined}>
-            <img
+            <Image
               src="/product3.jpg"
               alt="Product 3"
               className="object-cover w-full h-40"
+              width={500}
+              height={500}
             />
             <div className="p-4">
               <h3 className="text-lg font-bold mb-2">Product 3</h3>
