@@ -40,7 +40,9 @@ const Bottomnavbar: React.FC = () => {
                                 <RiAccountCircleFill className="text-3xl"/>
                                 <h3 className="font-titleFont font-bold text-lg tracking-wide">Hello, sign In</h3>
                             </div>
-                            <SideBarContent title={"A"} one={"B"} two={"C"} three={"D"} four={"E"} five={"F"} />
+                            <SideBarContent title={"Trending"} one={"Best Sellers"} two={"New Releases"} />
+                            <SideBarContent title={"Shop by Department"} one={"Category 1"} two={"Category 2"} three={"Category 3"} four={"Category 4"} five={"Category 5"} />
+                            <SideBarContent title={"Help and Settings"} one={"Your account"} two={"English"} three={"United States"} four={"Sign Out"}  />
                             <span onClick={()=>setSidebar(false)} className="cursor-pointer absolute top-[1px] right-[1px] w-10 h-10 flex items-center justify-center hover:bg-red-500 text-white duration-300">
                                 <IoCloseSharp className="text-3xl"/>
                             </span>
