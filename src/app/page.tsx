@@ -1,4 +1,3 @@
-"use client"
 import Banner from "./_components/Banner";
 import Navbar from "./_components/Navbar"
 import React from "react";
@@ -6,9 +5,6 @@ import React from "react";
 
 
 function Home() {
-    const handleClick = () => {
-        alert("Button works")
-    }
 
     return (
         <div>
