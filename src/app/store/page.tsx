@@ -1,6 +1,5 @@
-"use client"
 import React from 'react';
-import { Card, Button } from '@material-tailwind/react';
+import { Card, Button } from '../_components/ClientExports';
 import Topnavbar from '../_components/Navbar';
 import Image from 'next/image';
 

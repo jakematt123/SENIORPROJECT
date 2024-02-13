@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
@@ -5,12 +7,16 @@ import { listItems } from "../constants/TopBarListItems";
 import { LiaMapMarkerAltSolid } from "react-icons/lia";
 import { FaShoppingCart } from "react-icons/fa";
 import Bottomnavbar from "./Bottomnavbar";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 const logo = "/RaysLogoTransparent.png"
 const location = "Tampa, FL"
 
 const Navbar: React.FC = () => {
+
+    const searchParams = useSearchParams();
+    const searchState = searchParams.get("search");
     // State for dropdown
     const [showDropdown, setShowDropdown] = useState(false);
     // State for search
@@ -74,9 +80,11 @@ const Navbar: React.FC = () => {
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Search here..."
                     />
-                    <span onClick={()=>searchAction(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
+                    <Link
+                    href={searchState ? `?search=${search}` : `?search=${search}`}
+                    onClick={()=>searchAction(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
                         <IoSearch />
-                    </span>
+                    </Link>
                 </div>
                 <div onClick={() => route("/login")} className="flex flex-col items-start justify-center headerHover">
                     <p className="text-xs text-lightText font-light">Hello, sign in</p>
