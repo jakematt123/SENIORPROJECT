@@ -58,3 +58,10 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model contactUS{
+    id String @id @default(cuid())
+    fullName String
+    email String
+    message String
+}
