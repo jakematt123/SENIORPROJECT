@@ -9,7 +9,7 @@ const ContactUsButton = () => {
     const [message, setMessage] = useState("")
 
     const sendMessage = () => {
-        
+        alert(name)
     }
 
     return (
