@@ -18,8 +18,8 @@ const Contact: React.FC = () => {
             </div>
             <div>
                 <Footer/>
-            </div>
             
+         </div>   
         </div>
     )
 }
