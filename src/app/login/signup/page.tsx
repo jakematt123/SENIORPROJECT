@@ -19,19 +19,17 @@ const AccountCreationPage: React.FC = () => {
         setPassword(e.target.value);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // TODO: Handle form submission
-    };
 
     async function createUser(username: string, name: string, email: string, password: string) {
-        await Client.userRouter.createUser.mutate({ name, email, username, password });
-        console.log("User created");
+        const newUser = Client.userRouter.createUser.mutate({ name, email, username, password })
+            .then(() => console.log("User created"))
+            .catch((e) => console.error(e));
+        await newUser;
     }
 
     return (
         <div className="flex justify-center items-center h-screen">
-            <form className="w-1/3 p-6 bg-white rounded shadow" onSubmit={()=>{createUser(username, "null" , email, password)}}>
+            <form className="w-1/3 p-6 bg-white rounded shadow" onSubmit={()=>{void createUser(username, "null" , email, password)}}>
                 <h2 className="text-2xl font-bold mb-6">Create an Account</h2>
                 <div className="mb-4">
                     <label htmlFor="username" className="block mb-2 font-medium">

@@ -17,14 +17,19 @@ const ContactUsButton = () => {
     console.log(search)
 
     async function CreateDatabaseButCooler(name: string, email: string, message: string): Promise<void> {
-        await Client.contactRouter.createContactForm.mutate({ name, email, message });
+        const newFeedback = Client.contactRouter.createContactForm.mutate({ name, email, message })
+            .then(() => console.log("Form submitted successfully!"))
+            .catch((e) => console.error(e));
+
+        await newFeedback;
+
     }
 
     return (
         <div>
             <form onSubmit={(e) => {
                 e.preventDefault();
-                CreateDatabaseButCooler(name, email, message); setCongrats(true) 
+                void CreateDatabaseButCooler(name, email, message); setCongrats(true) 
             }} className="mt-8 space-y-1 border-solid border-2 border-blue-500 rounded">
                 <input 
                     type='text' 
