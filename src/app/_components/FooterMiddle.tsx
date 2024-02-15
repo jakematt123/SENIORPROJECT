@@ -1,84 +1,53 @@
 import React from 'react';
 import Image from 'next/image';
-import { FaFlagUsa } from 'react-icons/fa';
+import Link from 'next/link';
 
 const footers = [
     {
         title: 'Get to Know Us',
         items: [
-            'Careers',
-            'Blog',
-            'About Amazon',
-            'Investor Relations',
-            'Amazon Devices',
-            'Amazon Tours'
+            { label: 'FAQ', href: 'http://www.jak3.net/faq' }
         ]
     },
     {
-        title: 'Make Money with Us',
+        title: 'Store',
         items: [
-            'Sell products on Amazon',
-            'Sell apps on Amazon',
-            'Become an Affiliate',
-            'Advertise Your Products',
-            'Self-Publish with Us',
-            'Host an Amazon Hub'
+            { label: 'Store', href: 'http://www.jak3.net/store' }
         ]
     },
     {
-        title: 'Amazon Payment Products',
+        title: 'Contact Us',
         items: [
-            'Amazon Business Card',
-            'Shop with Points',
-            'Reload Your Balance',
-            'Amazon Currency Converter'
+            { label: 'Contact Us', href: 'http://www.jak3.net/contact' }
         ]
     },
     {
-        title: 'Let Us Help You',
+        title: 'Home',
         items: [
-            'Amazon and COVID-19',
-            'Your Account',
-            'Your Orders',
-            'Shipping Rates & Policies',
-            'Returns & Replacements',
-            'Manage Your Content and Devices',
-            'Amazon Assistant',
-            'Help'
+            { label: 'Home', href: 'http://www.jak3.net' }
         ]
-    
     }
 ]
 
-
 const FooterMiddle: React.FC = () => {
-    
     return (
         <div className='w-full bg-amazon_light text-white'>
             <div className='w-full border-b-[1px] border-gray-500 py-10'>
                 <div className='max-w-5xl mx-auto text-gray-300'>
                     <div className='w-full grid grid-cols-4 place-items-center items-start'>
-                            {
-                                footers.map((footer, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <h3 className='font-titleFont text-white text-base font-semibold mb-3'>{footer.title}</h3>
-                                            {
-                                                footer.items.map((item, index) => {
-                                                    return (
-                                                        <ul key={index} className='flex flex-col font-bodyFont'>
-                                                            <li className='footerLink'>{item}</li>
-                                                        </ul>
-                                                        
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    )
-                                })
-                            }
+                        {footers.map((footer, index) => (
+                            <div key={index}>
+                                <h3 className='font-titleFont text-white text-base font-semibold mb-3'>{footer.title}</h3>
+                                <ul className='flex flex-col font-bodyFont'>
+                                    {footer.items.map((item, index) => (
+                                        <li key={index} className='footerLink'>
+                                            <Link href={item.href}>{item.label}</Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                     </div>
-                    
                 </div>
             </div>
             <div className='w-full flex gap-6 items-center justify-center py-6'>
