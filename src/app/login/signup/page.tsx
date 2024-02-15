@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import { Client } from '~/app/api/Client';
 
 const AccountCreationPage: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -18,14 +19,17 @@ const AccountCreationPage: React.FC = () => {
         setPassword(e.target.value);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // TODO: Handle form submission
-    };
+
+    async function createUser(username: string, name: string, email: string, password: string) {
+        const newUser = Client.userRouter.createUser.mutate({ name, email, username, password })
+            .then(() => console.log("User created"))
+            .catch((e) => console.error(e));
+        await newUser;
+    }
 
     return (
         <div className="flex justify-center items-center h-screen">
-            <form className="w-1/3 p-6 bg-white rounded shadow" onSubmit={handleSubmit}>
+            <form className="w-1/3 p-6 bg-white rounded shadow" onSubmit={()=>{void createUser(username, "null" , email, password)}}>
                 <h2 className="text-2xl font-bold mb-6">Create an Account</h2>
                 <div className="mb-4">
                     <label htmlFor="username" className="block mb-2 font-medium">
