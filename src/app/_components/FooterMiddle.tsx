@@ -6,25 +6,25 @@ const footers = [
     {
         title: 'Get to Know Us',
         items: [
-            { label: 'FAQ', href: 'http://www.jak3.net/FAQ' }
+            { label: 'FAQ', href: '/faq' }
         ]
     },
     {
         title: 'Store',
         items: [
-            { label: 'Store', href: 'http://www.jak3.net/store' }
+            { label: 'Store', href: '/store' }
         ]
     },
     {
         title: 'Contact Us',
         items: [
-            { label: 'Contact Us', href: 'http://www.jak3.net/contact' }
+            { label: 'Contact Us', href: '/contact' }
         ]
     },
     {
         title: 'Home',
         items: [
-            { label: 'Home', href: 'http://www.jak3.net' }
+            { label: 'Home', href: '/' }
         ]
     }
 ]
