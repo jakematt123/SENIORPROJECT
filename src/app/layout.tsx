@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Amazoon",
+  title: "Amazooma",
 };
 
 export default function RootLayout({
