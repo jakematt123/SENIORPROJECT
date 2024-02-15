@@ -12,10 +12,11 @@
     https://www.youtube.com/watch?v=Qdkg_mrniLk
 */
 
-import { Card, Button } from '@material-tailwind/react';
+import { Card, Button, IconButton } from '@material-tailwind/react';
 
 
 export { 
     Card, 
     Button,
+    IconButton,
 }
