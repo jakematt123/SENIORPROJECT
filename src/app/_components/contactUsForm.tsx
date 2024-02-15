@@ -21,7 +21,22 @@ const ContactUsButton = () => {
                 className="w-full rounded-md py-3 px-4 bg-gray-100 text-sm outline-blue-500" />
             <textarea placeholder='Message' value={message} onChange={(e)=> setMessage(e.target.value)}
                 className="w-full rounded-md px-4 bg-gray-100 text-sm pt-3 outline-blue-500"></textarea>
-            <Button onClick={sendMessage} fullWidth ripple={true} variant="gradient" placeholder={undefined} className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><CiPaperplane className="mr-2 text-xl text-center" />Send</Button>
+            <Button
+                onClick={sendMessage}
+                fullWidth
+                ripple={true}
+                variant="gradient"
+                placeholder={undefined}
+                className={`
+                    flex items-center justify-center text-white bg-gradient-to-br from-green-400 to-blue-600 
+                     hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 
+                    dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 
+                    text-center me-2 mb-2
+                `}
+            >
+            <CiPaperplane className="text-xl mr-2" />
+             Send
+            </Button>
             </form>
         </div>
     )
