@@ -12,3 +12,9 @@
         @apply text-sm font-titleFont tracking-wide hover:text-gray-100 cursor-pointer hover:underline duration-150 pb-1.5;
     }
 }
+
+@media screen and (min-width: 1024px) {
+    .max-w-xl {
+        max-width: 1024px; /* Adjust as needed */
+    }
+}
