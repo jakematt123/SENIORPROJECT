@@ -15,25 +15,14 @@ const LoginPage: React.FC = () => {
         
     };
 
-    const handleSubmit = async (event: React.FormEvent) => {
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>, username: string, password: string) {
         event.preventDefault();
-        const result = await signIn('credentials', {
-            username,
-            password,
-            redirect: true, // Set this to true if you want to redirect after successful login
-        });
-
-        if (result?.error) {
-            // Handle login error
-        } else {
-            // Handle successful login
-        }
-    };
+    }
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <h1 className="text-2xl font-bold mb-4">Login Page</h1>
-            <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form onSubmit={(e)=>handleSubmit(e, username, password)} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                         Username:
