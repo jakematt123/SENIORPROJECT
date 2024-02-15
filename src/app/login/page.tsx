@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
         
     };
 
-    function handleSubmit(event: React.FormEvent<HTMLFormElement>, username: String, password: String) {
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>, username: string, password: string) {
         event.preventDefault();
     }
 
