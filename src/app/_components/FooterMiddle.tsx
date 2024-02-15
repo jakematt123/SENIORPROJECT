@@ -6,7 +6,7 @@ const footers = [
     {
         title: 'Get to Know Us',
         items: [
-            { label: 'FAQ', href: 'http://www.jak3.net/faq' }
+            { label: 'FAQ', href: 'http://www.jak3.net/FAQ' }
         ]
     },
     {
