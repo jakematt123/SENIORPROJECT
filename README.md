@@ -33,5 +33,3 @@ The website is deployed using Vercel, ensuring high performance and reliability.
 ## Conclusion
 
 Our senior project showcases our skills in building a robust ecommerce store using modern web technologies. It provides a user-friendly and visually appealing shopping experience, while incorporating best practices for security and performance.
-
-![Project Image](https://i.imgur.com/bxyD7q6.png)
