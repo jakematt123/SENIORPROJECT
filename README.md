@@ -1,6 +1,6 @@
 # Senior Project: Ecommerce Store
 
-![Project Image](filler)
+![Project Image](https://i.imgur.com/bxyD7q6.png)
 
 ## Description
 
@@ -20,7 +20,6 @@ Our senior project is an ecommerce store that mimics the functionality of Amazon
 - Product Catalog: A wide range of products are available for browsing and purchasing.
 - Shopping Cart: Users can add products to their cart and proceed to checkout.
 - Order Management: Users can view and manage their orders.
-- Payment Integration: Seamless integration with popular payment gateways for secure transactions.
 - Responsive Design: The website is optimized for various screen sizes and devices.
 
 ## Project Structure
@@ -35,4 +34,4 @@ The website is deployed using Vercel, ensuring high performance and reliability.
 
 Our senior project showcases our skills in building a robust ecommerce store using modern web technologies. It provides a user-friendly and visually appealing shopping experience, while incorporating best practices for security and performance.
 
-![Project Image](filler)
+![Project Image](https://i.imgur.com/bxyD7q6.png)
