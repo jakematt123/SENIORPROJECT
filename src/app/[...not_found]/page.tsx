@@ -1,9 +1,10 @@
 "use client"
+import { NextPage } from "next";
 import { Button } from "../_components/ClientExports"
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const NotFoundPage = () => {
+const NotFoundPage: NextPage = () => {
     const router = useRouter();
     const [loading, setLoading] = React.useState(false);
 

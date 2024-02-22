@@ -22,6 +22,7 @@
     "@trpc/next": "^10.43.6",
     "@trpc/react-query": "^10.43.6",
     "@trpc/server": "^10.43.6",
+    "@vercel/postgres": "^0.7.2",
     "framer-motion": "^11.0.3",
     "next": "^14.0.4",
     "next-auth": "^4.24.5",
@@ -33,6 +34,7 @@
     "sharp": "^0.33.2",
     "slick-carousel": "^1.8.1",
     "superjson": "^2.2.1",
+    "vercel": "^32.3.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

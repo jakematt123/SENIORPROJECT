@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
 
     return (
         <div className="w-full">
-            <div className="bg-amazon_blue text-white px-4 py-3 flex item-center gap-4">
+            <div className="bg-amazon_blue text-white px-4 py-3 flex item-center gap-4 sticky top-0">
                 {/* Logo Div */}
                 <div onClick={()=> route("/")} className="px-2 overflow-hidden flex items-center border-2 border-amazon_light hover:border-white cursor-pointer duration-100 bg-gradient-to-r from-amazon_blue to-amazon_light">
                     <Image className="w-24 h-9 object-scale-down" src={logo} width={595} height={439} alt="Logo"/>

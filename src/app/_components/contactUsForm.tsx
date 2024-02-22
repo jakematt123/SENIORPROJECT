@@ -5,7 +5,7 @@ import { CiPaperplane } from "react-icons/ci";
 import { Client } from "../api/Client";
 import { useSearchParams } from 'next/navigation';
 
-const ContactUsButton = () => {
+const ContactUsButton: React.FC = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");

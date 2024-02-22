@@ -2,10 +2,11 @@ import Banner from "./_components/Banner";
 import Navbar from "./_components/Navbar"
 import Footer from "./_components/Footer"
 import React from "react";
+import { NextPage } from "next";
 
 
 
-function Home() {
+const Home: NextPage = () => {
 
     return (
         <div>
