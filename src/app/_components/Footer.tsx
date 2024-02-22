@@ -4,7 +4,7 @@ import FooterBottom from "./FooterBottom";
 import FooterTop from "./FooterTop";
 import FooterMiddle from "./FooterMiddle";
 
-const Footer = () => {
+const Footer: React.FC = () => {
     return (
         <div className="font-titleFont">
             <FooterTop />

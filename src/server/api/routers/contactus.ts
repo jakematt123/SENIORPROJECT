@@ -2,7 +2,8 @@
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { z } from "zod";
-import { TRPCError } from "@trpc/server";
+
+
 
 // Define and export the contactRouter
 export const contactRouter = createTRPCRouter({
@@ -19,4 +20,8 @@ export const contactRouter = createTRPCRouter({
             }
         })
     }),
+    //Change to protectedProcedure after adding authentication
+    purgeContactForms: publicProcedure.mutation(async () => {
+        await db.contactUS.deleteMany({})
+    })
 });
