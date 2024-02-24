@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -16,9 +16,8 @@ const LoginPage: React.FC = () => {
     };
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>, username: string, password: string) {
-        event.preventDefault();
+        signIn();
     }
-
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <h1 className="text-2xl font-bold mb-4">Login Page</h1>

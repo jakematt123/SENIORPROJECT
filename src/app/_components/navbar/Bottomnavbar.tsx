@@ -2,7 +2,7 @@
 
 import React, { use, useEffect, useRef, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { bottomBarItems } from "../_constants/BottomBarItems";
+import { bottomBarItems } from "../../_constants/BottomBarItems";
 import { RiAccountCircleFill } from "react-icons/ri";
 import SideBarContent from "./SidebarContent";
 import { IoCloseSharp } from "react-icons/io5";
