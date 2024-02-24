@@ -1,7 +1,7 @@
 "use client"
 
-import { Session } from 'next-auth';
-import { signOut, useSession } from 'next-auth/react';
+import { type Session } from 'next-auth';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
