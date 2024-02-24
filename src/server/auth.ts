@@ -3,7 +3,7 @@ import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
-  User,
+  type User,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
@@ -60,7 +60,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email", placeholder:"hello@example.com" },
         password: { label: "Password", type: "password" },
       }, 
-      async authorize(credentials): Promise<User | null> {
+      async authorize(_credentials): Promise<User | null> {
         const user: User = { id: "1", name: "test", email: "test@test.com"};
         return user;
 

@@ -2,18 +2,14 @@ import Banner from "./_components/Banner";
 import Navbar from "./_components/navbar/Navbar"
 import Footer from "./_components/footer/Footer"
 import React from "react";
-import { NextPage } from "next";
-import { getServerSession } from "next-auth";
-import { authOptions } from "~/server/auth";
+import type { NextPage } from "next";
 
-
-const Home: NextPage = async () => {
-    const session = await getServerSession(authOptions);
+const Home: NextPage =  () => {
     return (
         <div>
-            <Navbar session={session}/>
+            <Navbar/>
             <Banner/>
-            <Footer />   
+            <Footer/>   
         </div>
         
     )

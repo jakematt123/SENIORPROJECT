@@ -1,6 +1,5 @@
-import React, { useState } from "react"
-import { Button } from "../_components/ClientExports"
-import Navbar  from "../_components/navbar/Navbar"
+import React from "react"
+import Navbar from "../_components/navbar/Navbar"
 import ContactUsButton from "../_components/contactUsForm"
 import Footer from "../_components/footer/Footer"
 
@@ -18,8 +17,7 @@ const Contact: React.FC = () => {
             </div>
             <div>
                 <Footer/>
-            
-         </div>   
+            </div>   
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Button } from '../_components/ClientExports';
-import Topnavbar from '../_components/navbar/Navbar';
+import Topnavbar from '../_components/navbar/TopNavbar';
 import Image from 'next/image';
 
 

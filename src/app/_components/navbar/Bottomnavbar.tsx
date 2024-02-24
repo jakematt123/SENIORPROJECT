@@ -1,13 +1,12 @@
 "use client"
 
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { bottomBarItems } from "../../_constants/BottomBarItems";
 import { RiAccountCircleFill } from "react-icons/ri";
 import SideBarContent from "./SidebarContent";
 import { IoCloseSharp } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const Bottomnavbar: React.FC = () => {
@@ -15,7 +14,6 @@ const Bottomnavbar: React.FC = () => {
     const ref = useRef<HTMLDivElement>(null);
     // State for sidebar
     const [sidebar, setSidebar] = useState(false);
-    const router = useRouter();
 
     // Close sidebar when clicking outside of it
     useEffect(() => {
