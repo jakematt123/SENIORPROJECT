@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import { Button } from "../_components/ClientExports"
-import Navbar  from "../_components/Navbar"
+import Navbar  from "../_components/navbar/Navbar"
 import ContactUsButton from "../_components/contactUsForm"
-import Footer from "../_components/Footer"
+import Footer from "../_components/footer/Footer"
 
 
 const Contact: React.FC = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import Navbar from "../_components/Navbar"
-import Footer from "../_components/Footer"
+import Navbar from "../_components/navbar/Navbar"
+import Footer from "../_components/footer/Footer"
 
 
 

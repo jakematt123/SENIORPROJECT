@@ -3,18 +3,20 @@
 import React, { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
-import { listItems } from "../_constants/TopBarListItems";
+import { listItems } from "../../_constants/TopBarListItems";
 import { LiaMapMarkerAltSolid } from "react-icons/lia";
 import { FaShoppingCart } from "react-icons/fa";
 import Bottomnavbar from "./Bottomnavbar";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { api } from "~/trpc/server";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 const logo = "/RaysLogoTransparent.png"
 const location = "Tampa, FL"
 
-const Navbar: React.FC = () => {
-
+const Navbar: React.FC<{ session: Session | null }> = ({ session }) => {
     const searchParams = useSearchParams();
     const searchState = searchParams.get("search");
     // State for dropdown
@@ -38,7 +40,7 @@ const Navbar: React.FC = () => {
     function route(route: string): void {
         router.push(route); 
     }
-
+    
     return (
         <div className="w-full">
             <div className="bg-amazon_blue text-white px-4 py-3 flex item-center gap-4 sticky top-0">
@@ -86,15 +88,31 @@ const Navbar: React.FC = () => {
                         <IoSearch />
                     </Link>
                 </div>
-                <div onClick={() => route("/login")} className="flex flex-col items-start justify-center headerHover">
-                    <p className="text-xs text-lightText font-light">Hello, sign in</p>
-                    <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
-                        Account & Lists&nbsp; 
-                        <span>
-                            <IoMdArrowDropdown />
-                        </span>
-                    </p>
-                </div>
+                
+                    {
+                        session ? (
+                            <div onClick={() => route("/contact")} className="flex flex-col items-start justify-center headerHover">
+                                <p className="text-xs text-lightText font-light">Hello, {session.user.name}</p>
+                                <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
+                                Account & Lists&nbsp; 
+                                <span>
+                                    <IoMdArrowDropdown />
+                                </span>
+                                </p>
+                            </div>
+                        ) : (
+                            <div onClick={() => route("/api/auth/signin")} className="flex flex-col items-start justify-center headerHover">
+                                <p className="text-xs text-lightText font-light">Hello, sign in</p>
+                                <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
+                                Account & Lists&nbsp; 
+                                <span>
+                                    <IoMdArrowDropdown />
+                                </span>
+                                </p>
+                            </div>
+                        )
+                    }
+                   
                 <div className="flex flex-col items-start justify-center headerHover">
                     <p className="text-xs text-lightText font-light">Returns</p>
                     <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>

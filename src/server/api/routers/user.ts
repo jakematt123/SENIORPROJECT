@@ -6,7 +6,7 @@ import { TRPCError } from "@trpc/server";
 
 // Define and export the contactRouter
 export const userRouter = createTRPCRouter({
-    createUser: publicProcedure.input(
+    createUserCreds: publicProcedure.input(
         z.object({
             name: z.string(),
             username: z.string(),
@@ -23,5 +23,8 @@ export const userRouter = createTRPCRouter({
             }
         })
             
-    })
+    }),
+    purgeAccounts: publicProcedure.mutation(async () => {
+        await db.user.deleteMany({})
+    }),
 });
