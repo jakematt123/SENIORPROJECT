@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Button } from '../_components/ClientExports';
-import Topnavbar from '../_components/Navbar';
+import Navbar from '../_components/navbar/Navbar';
 import Image from 'next/image';
 
 
@@ -9,7 +9,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-        <Topnavbar/>
+      <Navbar/>
 
       {/* Main Content */}
       <main className="p-4">

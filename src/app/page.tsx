@@ -1,17 +1,15 @@
 import Banner from "./_components/Banner";
-import Navbar from "./_components/Navbar"
-import Footer from "./_components/Footer"
+import Navbar from "./_components/navbar/Navbar"
+import Footer from "./_components/footer/Footer"
 import React from "react";
+import type { NextPage } from "next";
 
-
-
-function Home() {
-
+const Home: NextPage =  () => {
     return (
         <div>
             <Navbar/>
             <Banner/>
-            <Footer />   
+            <Footer/>   
         </div>
         
     )
