@@ -2,7 +2,7 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
-
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { TRPCReactProvider } from "~/trpc/react";
 import { Providers } from "./api/Providers";
 
@@ -26,6 +26,7 @@ export default function RootLayout({
           <Providers>
             <TRPCReactProvider cookies={cookies().toString()}>
               {children}
+              <SpeedInsights/>
             </TRPCReactProvider>
           </Providers>
       </body>
