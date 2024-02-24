@@ -10,7 +10,7 @@ const NotFoundPage: NextPage = () => {
 
     function handleClick(): void {
         setLoading(true);
-        router.back();
+        router.push("/");
     }
     return (
         <div className="flex flex-col items-center justify-center h-screen">
