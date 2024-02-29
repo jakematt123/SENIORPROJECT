@@ -1,5 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+
+#No super secret admin stuff allowed
+/src/app/supersecretadminpage
+
 # dependencies
 /node_modules
 /.pnp
@@ -23,6 +27,7 @@ next-env.d.ts
 # misc
 .DS_Store
 *.pem
+.vscode
 
 # debug
 npm-debug.log*
@@ -34,6 +39,7 @@ yarn-error.log*
 # do not commit any .env files to git, except for the .env.example file. https://create.t3.gg/en/usage/env-variables#using-environment-variables
 .env
 .env*.local
+.env.production
 
 # vercel
 .vercel

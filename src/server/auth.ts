@@ -3,7 +3,9 @@ import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
+  type User,
 } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import DiscordProvider from "next-auth/providers/discord";
 
 import { env } from "~/env";
@@ -37,7 +39,8 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
+    session: 
+    ({ session, user }) => ({
       ...session,
       user: {
         ...session.user,
@@ -51,6 +54,34 @@ export const authOptions: NextAuthOptions = {
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
+    CredentialsProvider({
+      name: "Sign in",
+      credentials: {
+        email: { label: "Email", type: "email", placeholder:"hello@example.com" },
+        password: { label: "Password", type: "password" },
+      }, 
+      async authorize(_credentials): Promise<User | null> {
+        const user: User = { id: "1", name: "test", email: "test@test.com"};
+        return user;
+
+        /*
+        if (!credentials) {
+          return null;
+        }
+
+        const user = await db.user.findFirst({
+          where: {
+            username: credentials.email,
+          },
+        });
+
+        if (user && user.password === credentials.password) {
+          return { id: user.id, email: user.email };
+        } else {
+          return null;
+        }*/
+      }
+    })
     /**
      * ...add more providers here.
      *

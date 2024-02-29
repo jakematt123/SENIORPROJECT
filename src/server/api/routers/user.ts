@@ -1,12 +1,11 @@
 // Import necessary modules (replace these imports with actual imports)
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { z } from "zod";
-import { TRPCError } from "@trpc/server";
 
 // Define and export the contactRouter
 export const userRouter = createTRPCRouter({
-    createUser: publicProcedure.input(
+    createUserCreds: publicProcedure.input(
         z.object({
             name: z.string(),
             username: z.string(),
@@ -23,5 +22,8 @@ export const userRouter = createTRPCRouter({
             }
         })
             
-    })
+    }),
+    purgeAccounts: publicProcedure.mutation(async () => {
+        await db.user.deleteMany({})
+    }),
 });

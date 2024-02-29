@@ -1,15 +1,16 @@
 "use client"
+import { type NextPage } from "next";
 import { Button } from "../_components/ClientExports"
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const NotFoundPage = () => {
+const NotFoundPage: NextPage = () => {
     const router = useRouter();
     const [loading, setLoading] = React.useState(false);
 
     function handleClick(): void {
         setLoading(true);
-        router.back();
+        router.push("/");
     }
     return (
         <div className="flex flex-col items-center justify-center h-screen">

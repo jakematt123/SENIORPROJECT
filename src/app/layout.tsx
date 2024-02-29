@@ -2,8 +2,9 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
-
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { TRPCReactProvider } from "~/trpc/react";
+import { Providers } from "./api/Providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,9 +23,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-          <TRPCReactProvider cookies={cookies().toString()}>
-            {children}
-          </TRPCReactProvider>
+          <Providers>
+            <TRPCReactProvider cookies={cookies().toString()}>
+              {children}
+              <SpeedInsights/>
+            </TRPCReactProvider>
+          </Providers>
       </body>
     </html>
     
