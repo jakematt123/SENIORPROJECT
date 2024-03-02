@@ -11,17 +11,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { Session } from "next-auth";
+import DropDown from "./DropDown";
 const logo = "/RaysLogoTransparent.png"
 const location = "Tampa, FL"
 
 const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
     const searchParams = useSearchParams();
     const searchState = searchParams.get("search");
-    // State for dropdown
     const [showDropdown, setShowDropdown] = useState(false);
-    // State for search
     const [search, setSearch] = useState<string>("");
-    // Router
+    const [isHovered, setIsHovered] = useState(false);
     const router = useRouter();
 
     // Do something with search here
@@ -34,16 +33,24 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
         
     }
 
-    // This is probably not needed just keeps routing organized
-    function route(route: string): void {
-        router.push(route); 
+    function handleHover() {
+        return(
+            <DropDown />
+        )
     }
-    
+
     return (
         <div className="w-full">
+                <div>
+                    {
+                        isHovered && (
+                            <DropDown />
+                        )
+                    }
+                </div>
             <div className="bg-amazon_blue text-white px-4 py-3 flex item-center gap-4 sticky top-0">
                 {/* Logo Div */}
-                <div onClick={()=> route("/")} className="px-2 overflow-hidden flex items-center border-2 border-amazon_light hover:border-white cursor-pointer duration-100 bg-gradient-to-r from-amazon_blue to-amazon_light">
+                <div onClick={()=> router.push("/")} className="px-2 overflow-hidden flex items-center border-2 border-amazon_light hover:border-white cursor-pointer duration-100 bg-gradient-to-r from-amazon_blue to-amazon_light">
                     <Image className="w-24 h-9 object-scale-down" src={logo} width={595} height={439} alt="Logo"/>
                 </div>
                 <div className="headerHover">
@@ -86,45 +93,47 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                         <IoSearch />
                     </Link>
                 </div>
-                
-                    {
-                        session ? (
-                            <div onClick={() => route("/contact")} className="flex flex-col items-start justify-center headerHover">
-                                <p className="text-xs text-lightText font-light">Hello, {session.user.name}</p>
-                                <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
-                                Account & Lists&nbsp; 
-                                <span>
-                                    <IoMdArrowDropdown />
-                                </span>
-                                </p>
-                            </div>
-                        ) : (
-                            <div onClick={() => route("/api/auth/signin")} className="flex flex-col items-start justify-center headerHover">
-                                <p className="text-xs text-lightText font-light">Hello, sign in</p>
-                                <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
-                                Account & Lists&nbsp; 
-                                <span>
-                                    <IoMdArrowDropdown />
-                                </span>
-                                </p>
-                            </div>
-                        )
-                    }
-                   
-                <div className="flex flex-col items-start justify-center headerHover">
-                    <p className="text-xs text-lightText font-light">Returns</p>
-                    <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
+                    <div>
+                        {
+                            session ? (
+                                <div onMouseEnter={()=>setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)} onClick={() => router.push("/contact")} className="flex flex-col items-start justify-center headerHover">
+                                    <p className="text-xs text-lightText font-light">Hello, {session.user.name}</p>
+                                    <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
+                                    Account & Lists&nbsp; 
+                                    <span>
+                                        <IoMdArrowDropdown />
+                                    </span>
+                                    </p>
+                                </div>
+                            ) : (
+                                <div onMouseEnter={()=>setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)} onClick={() => router.push("/api/auth/signin")} className="flex flex-col items-start justify-center headerHover">
+                                    <p className="text-xs text-lightText font-light">Hello, sign in</p>
+                                    <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
+                                    Account & Lists&nbsp; 
+                                    <span>
+                                        <IoMdArrowDropdown />
+                                    </span>
+                                    </p>
+                                </div>
+                            )
+                        }
+                        
+                        
+                    </div>
+                    <div className="flex flex-col items-start justify-center headerHover">
+                        <p className="text-xs text-lightText font-light">Returns</p>
+                        <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
+                    </div>
+                    <div className="flex items-center headerHover relative">
+                        <FaShoppingCart className="mr-1 -mb-2 text-xl"/>
+                        <p className="text-xs font-semibold mt-3 text-whiteText">
+                            &nbsp;Cart 
+                            <span className="absolute text-xs top-0 left-5 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center">
+                                0
+                            </span>
+                        </p>
+                    </div>
                 </div>
-                <div className="flex items-center headerHover relative">
-                    <FaShoppingCart className="mr-1 -mb-2 text-xl"/>
-                    <p className="text-xs font-semibold mt-3 text-whiteText">
-                        &nbsp;Cart 
-                        <span className="absolute text-xs top-0 left-5 font-semibold p-1 h-4 bg-[#f3a847] text-amazon_blue rounded-full flex justify-center items-center">
-                            0
-                        </span>
-                    </p>
-                </div>
-            </div>
             <Bottomnavbar />
         </div>
     )

@@ -10,6 +10,7 @@ import DiscordProvider from "next-auth/providers/discord";
 
 import { env } from "~/env";
 import { db } from "~/server/db";
+import { hash } from "bcrypt";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -60,9 +61,24 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email", placeholder:"hello@example.com" },
         password: { label: "Password", type: "password" },
       }, 
-      async authorize(_credentials): Promise<User | null> {
-        const user: User = { id: "1", name: "test", email: "test@test.com"};
-        return user;
+      async authorize(credentials, _req): Promise<User | null> {
+
+        if (!credentials || !credentials.email || !credentials.password) {
+          return null;
+        }
+
+        const user = await db.user.findFirst({
+          where: {
+            email: credentials.email,
+            password: credentials.password,
+          },
+        });
+
+        if (user && user.password === credentials.password) {
+          return { id: user.id, email: user.email };
+        } else {
+          return null;
+        }
 
         /*
         if (!credentials) {
@@ -92,6 +108,7 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+
   
 };
 
