@@ -3,20 +3,17 @@ import { Button } from "./ClientExports";
 import React, { useState } from "react";
 import { CiPaperplane } from "react-icons/ci";
 import { Client } from "../api/Client";
-import { useSearchParams } from 'next/navigation';
 
 const ContactUsButton: React.FC = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [IamABot, setIamABot] = useState(""); // This is a honeypot field to prevent spam. If it's filled out, the form won't submit. [TODO: Implement this.]
     const [congrats, setCongrats] = useState(false);
-    const searchParams = useSearchParams();
+    
 
-
-    const search = searchParams.get('congrats')
-    console.log(search)
-
-    async function CreateDatabaseButCooler(name: string, email: string, message: string): Promise<void> {
+    async function CreateDatabaseButCooler(name: string, email: string, message: string, honeypot: string): Promise<void> {
+        if(honeypot.length) return console.log("You are a bot") // If the honeypot is filled out, it's a bot. Don't submit the form.;
         const newFeedback = Client.contactRouter.createContactForm.mutate({ name, email, message })
             .then(() => console.log("Form submitted successfully!"))
             .catch((e) => console.error(e));
@@ -29,7 +26,7 @@ const ContactUsButton: React.FC = () => {
         <div>
             <form onSubmit={(e) => {
                 e.preventDefault();
-                void CreateDatabaseButCooler(name, email, message); setCongrats(true) 
+                void CreateDatabaseButCooler(name, email, message, IamABot); setCongrats(true) 
             }} className="mt-8 space-y-1 border-solid border-2 border-blue-500 rounded">
                 <input 
                     type='text' 
@@ -51,6 +48,11 @@ const ContactUsButton: React.FC = () => {
                     onChange={(e)=> setMessage(e.target.value)}
                     className="w-full rounded-md px-4 bg-gray-100 text-sm pt-3 outline-blue-500"
                 ></textarea>
+                <input
+                    placeholder="lol"
+                    value={IamABot}
+                    onChange={(e) => setIamABot(e.target.value)}
+                    className="hidden" />
                 <Button 
                     type="submit" 
                     fullWidth

@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Button } from '../_components/ClientExports';
 import Navbar from '../_components/navbar/Navbar';
 import Image from 'next/image';
+import Footer from '../_components/footer/Footer';
 
 
 
@@ -76,6 +77,7 @@ const Home: React.FC = () => {
           </Card>
         </div>
       </main>
+      <Footer/>
     </div>
   );
 };

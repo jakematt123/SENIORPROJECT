@@ -8,7 +8,10 @@ const FAQ: React.FC = () => {
     return(
         <div>
             <Navbar/>
-            <h1 className="text-left text-3xl">Frequently Asked Questions</h1>
+            <div className="w-full h-full">
+                <h1 className="text-left text-3xl">Frequently Asked Questions</h1>
+            </div>
+            
             
             <div>
                 <Footer/>

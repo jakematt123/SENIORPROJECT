@@ -1,37 +1,31 @@
+"use client"
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 
 
 const footers = [
     {
         title: 'Get to Know Us',
-        items: [
-            { label: 'FAQ', href: '/faq' }
-        ]
+        href: '/FAQ',
     },
     {
         title: 'Store',
-        items: [
-            { label: 'Store', href: '/store' }
-        ]
+        href: '/store',
     },
     {
         title: 'Contact Us',
-        items: [
-            { label: 'Contact Us', href: '/contact' }
-        ]
+        href: '/contact',
     },
     {
         title: 'Home',
-        items: [
-            { label: 'Home', href: '/' }
-        ]
+        href: '/',
     }
 ]
 
 const FooterMiddle: React.FC = () => {
+    const router = useRouter();
     return (
         <div className='w-full bg-amazon_light text-white'>
             <div className='w-full border-b-[1px] border-gray-500 py-10'>
@@ -39,14 +33,7 @@ const FooterMiddle: React.FC = () => {
                     <div className='w-full grid grid-cols-4 place-items-center items-start'>
                         {footers.map((footer, index) => (
                             <div key={index}>
-                                <h3 className='font-titleFont text-white text-base font-semibold mb-3'>{footer.title}</h3>
-                                <ul className='flex flex-col font-bodyFont'>
-                                    {footer.items.map((item, index) => (
-                                        <li key={index} className='footerLink'>
-                                            <Link href={item.href}>{item.label}</Link>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <h1 onClick={()=>{router.push(`${footer.href}`)}} className='font-titleFont text-white headerHover text-md'>{footer.title}</h1>
                             </div>
                         ))}
                     </div>

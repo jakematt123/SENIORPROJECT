@@ -8,12 +8,14 @@ import SideBarContent from "./SidebarContent";
 import { IoCloseSharp } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Bottomnavbar: React.FC = () => {
     // Ref for sidebar
     const ref = useRef<HTMLDivElement>(null);
     // State for sidebar
     const [sidebar, setSidebar] = useState(false);
+    const router = useRouter();
 
     // Close sidebar when clicking outside of it
     useEffect(() => {
@@ -31,7 +33,7 @@ const Bottomnavbar: React.FC = () => {
                 </li>
                 {
                     bottomBarItems.map((item, index) => (
-                        <Link href={item.url} onClick={()=>console.log(item.url)} key={index} className="headerHover">{item.text}</Link>
+                        <Link href={item.url} onClick={()=>router.push(item.url)} key={index} className="headerHover">{item.text}</Link>
                     ))
                 }
             </ul>
