@@ -2,65 +2,95 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mongodb"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid()) @map("_id")
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? 
-    access_token      String? 
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? 
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid()) @map("_id")
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid()) @map("_id")
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id            String    @id @default(cuid()) @map("_id")
-    name          String
-    username      String?   @unique @default(uuid())
-    password      String?
-    email         String    @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+  id            String    @id @default(cuid()) @map("_id")
+  name          String
+  username      String?   @unique @default(uuid())
+  password      String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  review        Review[]
 }
 
 model VerificationToken {
-    id         String   @id @default(cuid()) @map("_id")
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  id         String   @id @default(cuid()) @map("_id")
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
 
 model contactUS {
-    id String @id @default(cuid()) @map("_id")
-    fullName String
-    email String
-    message String
+  id       String @id @default(cuid()) @map("_id")
+  fullName String
+  email    String
+  message  String
+}
+
+model Item {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  price       Float
+  quantity    Int
+  images      Image[]  @relation("ItemImage", name: "ItemImages")
+  reviews     Review[]
+}
+
+model Image {
+  id     String @id @default(cuid()) @map("_id")
+  itemId String
+  type   String
+  url    String // URL of the image stored in S3
+  item   Item   @relation("ItemImage", name: "ItemImages", fields: [itemId], references: [id])
+}
+
+
+model Review {
+  id      String @id @default(cuid()) @map("_id")
+  rating  Int
+  comment String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  item    Item   @relation(fields: [itemId], references: [id])
+  itemId  String
 }

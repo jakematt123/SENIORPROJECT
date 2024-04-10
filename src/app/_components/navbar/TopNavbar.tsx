@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
-import { listItems, loginMenuButtonItems } from "../../_constants/TopBarListItems";
+import { listItems } from "../../_constants/TopBarListItems";
 import { LiaMapMarkerAltSolid } from "react-icons/lia";
 import { FaShoppingCart } from "react-icons/fa";
 import Bottomnavbar from "./Bottomnavbar";
@@ -11,14 +11,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { Session } from "next-auth";
-import { signOut } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import DropdownComponent from "./DropDown";
 const logo = "/RaysLogoTransparent.png"
 const location = "Tampa, FL"
 
 const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
-    const searchParams = useSearchParams();
-    const searchState = searchParams.get("search");
     const [showDropdown, setShowDropdown] = useState(false);
     const [search, setSearch] = useState<string>("");
     const [isHovered, setIsHovered] = useState(false);
@@ -26,12 +24,11 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
 
     // Do something with search here
     function searchAction(search: string, event?: React.KeyboardEvent): void {
+        console.log(search, event?.key, search.length)
         if(event?.key !== "Enter" || !search.length) return;
-        if(!search.length) {
-            router.push("/contact");
-        } else {
-            alert("You searched for: " + search);
-        }
+        if(!search.length) return
+        console.log("searching...")
+        router.push(`/store/${search.toLowerCase()}`)
         
     }
 
@@ -73,27 +70,36 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                             </div>
                         )
                     }
-                    <DropdownComponent id={"login"} items={loginMenuButtonItems}>
-                        <input 
-                            type="search"
-                            className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            onKeyDown={(e) => {searchAction(search, e)}}
-                            placeholder="Search here..."
-                        />
-                    </DropdownComponent>
-                    <Link
-                        href={searchState ? `?search=${search}` : `?search=${search}`}
+
+                    <input 
+                        type="search"
+                        className="w-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        onKeyDown={(e) => {searchAction(search, e)}}
+                        placeholder="Search for items here..."
+                    />
+
+
+                    <div
                         onClick={()=>searchAction(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
                             <IoSearch />
-                    </Link>
+                    </div>
                     
                 </div>
                 
-                <DropdownComponent id={"login"} items={loginMenuButtonItems}>
+                <DropdownComponent id={"login"} items={[
+                    (session ? {text: "Sign Out", url: "/api/auth/signout"} : {text: "Sign In", url: "/api/auth/signin"}),
+                    {text: "Your Orders", url: "/"},
+                    {text: "Your Lists", url: "/"},
+                    {text: "Your Account", url: "/"},
+                    {text: "Sell on Amazon", url: "/"},
+                    {text: "Help", url: "/"},
+                    {text: "Sign Out", url: "/"}
+                ]
+                }>
                 <div className="flex flex-col items-start justify-center relative cursor-pointer">
-                        <div onClick={() => router.push("/api/auth/signin")}>
+                        <div onClick={() => session ? router.push(`/profiles/${session?.user.name}`) : router.push(`/api/auth/signin`)}>
                             <p className="text-xs text-lightText font-light">Hello, {session?.user ? session.user.name : "sign in"}</p>
                             <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
                                 Account & Lists&nbsp;<span><IoMdArrowDropdown /></span>

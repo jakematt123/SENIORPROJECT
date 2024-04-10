@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 interface MenuItem {
     text: string;
+    component?: React.ReactNode;
     url: string;
 }
 

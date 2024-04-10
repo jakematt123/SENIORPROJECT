@@ -15,10 +15,3 @@ export const listItems = [
     {text: "Clothing, Shoes & Jewelry", url: "/"},
     {text: "Collectible Coins", url: "/"},
 ]
-
-export const loginMenuButtonItems = [
-    {text: "Your Lists", url: "/"},
-    {text: "Your Account", url: "/"},
-    {text: "Your Orders", url: "/"},
-    {text: "Your Recommendations", url: "/"},
-]
