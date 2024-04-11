@@ -6,7 +6,7 @@ import deal2 from "../../../assets/deal2.jpg"
 import deal3 from "../../../assets/deal3.jpg"
 import { CreateGrid } from '../_components/store/storeGrid';
 import 'react-medium-image-zoom/dist/styles.css'
-import { DiscountedCard, addToCart } from '../_components/store/itemcard';
+import { DiscountedCard } from '../_components/store/itemcard';
 import { Client } from '../api/Client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '~/server/auth';
@@ -35,8 +35,6 @@ export async function handleCLick(id: string) {
 
   if (!userResponse) return;
 
-  void addToCart(itemResponse.id, 1, userResponse.id);
-
 }
 
 
@@ -52,7 +50,6 @@ const ReviewStars = ({rating, reviewCount}) => {
     </div>
   );
 }
-
 
 
 const Home: React.FC = () => {

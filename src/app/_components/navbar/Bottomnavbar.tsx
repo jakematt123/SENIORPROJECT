@@ -46,7 +46,7 @@ const Bottomnavbar: React.FC = () => {
                                 <h3 className="font-titleFont font-bold text-lg tracking-wide">Hello, sign In</h3>
                             </div>
                             <SideBarContent title={"Trending"} items={["Best Sellers", "New Releases"]} />
-                            <SideBarContent title={"Shop by Department"} items={["Category 1", "Category 2", "Category 3", "Category 4", "Category 5"]} />
+                            <SideBarContent title={"Shop by Department"} items={["Clothing", "Technology", "Textiles", "Furniture", "Food"]} />
                             <SideBarContent title={"Help and Settings"} items={["Your account", "English", "United States", "Sign Out"]}  />
                             <span onClick={()=>setSidebar(false)} className="cursor-pointer absolute top-[1px] right-[1px] w-10 h-10 flex items-center justify-center hover:bg-red-500 text-white duration-300">
                                 <IoCloseSharp className="text-3xl"/>

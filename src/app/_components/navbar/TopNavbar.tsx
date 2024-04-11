@@ -109,7 +109,7 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                     <p className="text-xs text-lightText font-light">Returns</p>
                     <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
                 </div>
-                <div onClick={()=>{router.push("/cart")}} className="flex items-center headerHover relative">
+                <div onClick={()=>{router.push("/addToCart")}} className="flex items-center headerHover relative">
                     <FaShoppingCart className="mr-1 -mb-2 text-xl"/>
                     <p className="text-xs font-semibold mt-3 text-whiteText">
                         &nbsp;Cart 
