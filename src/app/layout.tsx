@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Amazooma",
+  title: "Amazooma.com",
 };
 
 export default function RootLayout({

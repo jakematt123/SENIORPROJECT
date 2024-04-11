@@ -2,65 +2,112 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mongodb"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid()) @map("_id")
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? 
-    access_token      String? 
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? 
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid()) @map("_id")
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid()) @map("_id")
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id            String    @id @default(cuid()) @map("_id")
-    name          String
-    username      String?   @unique @default(uuid())
-    password      String?
-    email         String    @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+  id            String         @id @default(cuid()) @map("_id")
+  name          String
+  username      String?        @unique @default(uuid())
+  password      String?
+  email         String         @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  role          String         @default("USER")
+  ShoppingCart  ShoppingCart[]
 }
 
 model VerificationToken {
-    id         String   @id @default(cuid()) @map("_id")
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  id         String   @id @default(cuid()) @map("_id")
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
 }
 
 model contactUS {
-    id String @id @default(cuid()) @map("_id")
-    fullName String
-    email String
-    message String
+  id       String @id @default(cuid()) @map("_id")
+  fullName String
+  email    String
+  message  String
+}
+
+model Item {
+  id          String     @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  price       Float
+  quantity    Int
+  images      Image[]    @relation("ItemImage", name: "ItemImages")
+  CartItem    CartItem[]
+}
+
+model Image {
+  id       String @id @default(cuid()) @map("_id")
+  itemId   String
+  type     String
+  filename String // NAME OF THE FILE STORED ON S3
+  item     Item   @relation("ItemImage", name: "ItemImages", fields: [itemId], references: [id])
+}
+
+model Review {
+  id      String @id @default(cuid()) @map("_id")
+  name String
+  rating Int
+  comment String
+  item  String
+}
+
+model ShoppingCart {
+  id        String     @id @default(cuid()) @map("_id")
+  userId    String
+  items     CartItem[] // Relation to the items in the shopping cart
+  createdAt DateTime   @default(now())
+
+  // Relation to the user
+  user User @relation(fields: [userId], references: [id])
+}
+
+model CartItem {
+  id       String       @id @default(cuid()) @map("_id")
+  quantity Int // Quantity of the item in the cart
+  item     Item         @relation(fields: [itemId], references: [id])
+  itemId   String // ID of the item in the cart
+  cart     ShoppingCart @relation(fields: [cartId], references: [id])
+  cartId   String // ID of the shopping cart
 }

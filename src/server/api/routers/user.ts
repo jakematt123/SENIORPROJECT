@@ -26,4 +26,15 @@ export const userRouter = createTRPCRouter({
     purgeAccounts: publicProcedure.mutation(async () => {
         await db.user.deleteMany({})
     }),
+    getUserbyName: publicProcedure.input(
+        z.object({
+            name: z.string()
+        })
+    ).query(async ({ input }) => {
+        return await db.user.findFirst({
+            where: {
+                name: input.name
+            }
+        })
+    }),
 });

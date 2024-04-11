@@ -55,14 +55,29 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
     CredentialsProvider({
-      name: "Sign in",
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder:"hello@example.com" },
         password: { label: "Password", type: "password" },
       }, 
-      async authorize(_credentials): Promise<User | null> {
-        const user: User = { id: "1", name: "test", email: "test@test.com"};
-        return user;
+      async authorize(credentials, _req): Promise<User | null> {
+
+        if (credentials?.email ?? !credentials?.password) {
+          return null;
+        }
+
+        const user = await db.user.findFirst({
+          where: {
+            email: credentials.email,
+            password: credentials.password,
+          },
+        });
+
+        if (user && user.password === credentials.password) {
+          return { id: user.id, email: user.email };
+        } else {
+          return null;
+        }
 
         /*
         if (!credentials) {
@@ -92,6 +107,7 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+
   
 };
 
