@@ -94,10 +94,9 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                     {text: "Your Account", url: "/"},
                     {text: "Sell on Amazon", url: "/"},
                     {text: "Help", url: "/"},
-                    {text: "Sign Out", url: "/"}
                 ]}>
                 <div className="flex flex-col items-start justify-center relative cursor-pointer">
-                        <div onClick={() => session ? router.push(`/profiles/${session?.user.name}`) : router.push(`/api/auth/signin`)}>
+                        <div onClick={() => session ? router.push(`/userpages`) : router.push(`/api/auth/signin`)}>
                             <p className="text-xs text-lightText font-light">Hello, {session?.user ? session.user.name : "sign in"}</p>
                             <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
                                 Account & Lists&nbsp;<span><IoMdArrowDropdown /></span>

@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaUser, FaMapMarker, FaShoppingCart, FaCog } from 'react-icons/fa';
-const Profiles = () => {
+import { getServerSession } from 'next-auth';
+import { authOptions } from '~/server/auth';
+import { ChangePasswordForm } from './clientprofile';
+
+const Profiles = async () => {
+    const session = await getServerSession(authOptions);
+    
     return (
         <div className="flex">
             {/* Left side with the list */}
             <div className="w-1/3 border-r p-4">
-                <h1 className="text-4xl mb-4">My Account</h1>
+                { session ? <h2 className="text-4xl mb-4">Welcome, {session.user.name}</h2> : <h2 className="text-4xl mb-4">Welcome, User</h2> }
                 <ul className="space-y-2">
                     <li
                         className="flex items-center p-2 rounded-md cursor-pointer hover:bg-gray-100"
@@ -34,7 +40,7 @@ const Profiles = () => {
                 </ul>
             </div>
             {/* Right side with information */}
-            <div className="w-2/3 p-4 border-l">
+            <div className="flex flex-col w-2/3 p-4 border-l space-y-5">
                 <div className="border rounded-lg p-4 bg-gray-100">
                     <h2 className="text-3xl mb-4">Information</h2>
                     <p className="text-lg">
@@ -42,9 +48,18 @@ const Profiles = () => {
                         item.
                     </p>
                 </div>
+                {session ? <ChangePasswordForm /> : null}
+                <div className="border rounded-lg p-4 bg-gray-100">
+                    <h2 className="text-3xl mb-4">User Information</h2>
+                    <p className="text-lg">
+                       You are a user
+                    </p>
+                </div>
             </div>
+            
         </div>
     );
 };
+  
 
 export default Profiles;

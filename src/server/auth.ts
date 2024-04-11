@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
     CredentialsProvider({
-      name: "Sign in",
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder:"hello@example.com" },
         password: { label: "Password", type: "password" },

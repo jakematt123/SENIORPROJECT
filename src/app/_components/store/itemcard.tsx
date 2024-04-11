@@ -1,8 +1,17 @@
 "use client"
 
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, Card } from '../ClientExports';
+import { Controlled as ControlledZoom } from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css'
+import { StaticImageData } from 'next/image';
+import { Client } from '~/app/api/Client';
+import { useSession } from 'next-auth/react';
+import { Session } from 'next-auth';
+import { handleCLick } from '~/app/store/page';
+import { useRouter } from 'next/navigation';
 
+const router = useRouter();
 
 export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
     return (
@@ -12,6 +21,20 @@ export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
       </div>
     );
 };
+
+
+export async function addToCart(id: string, quantity: number, userId: string) {
+    Client.dbRouter.addToCart.mutate({
+        itemId: id,
+        quantity: quantity,
+        userId: userId
+    }).then((response) => {
+        console.log(response);
+    }).catch((error) => {
+        console.log(error);
+    });
+}
+
 
 const ReviewStars = ({rating, reviewCount}) => {
     return ( 
@@ -27,18 +50,42 @@ const ReviewStars = ({rating, reviewCount}) => {
 }
 
 interface ItemCardProps {
-    image: JSX.Element;
+    image: string;
     title: string;
     description: string;
     price: number;
     quantity: number;
 }
 
+interface DiscountedCardProps {
+    image: StaticImageData;
+    title: string;
+    description: string;
+    price: number;
+    quantity: number;
+    newprice: number;
+}
+
+const onClick = async () => {
+    alert("Item added to cart!")
+}
+
 export const ItemCard: React.FC<ItemCardProps> = (props: ItemCardProps) => {
+
+    const [isZoomed, setIsZoomed] = useState(false)
+
+    const handleZoomChange = useCallback(shouldZoom => {
+      setIsZoomed(shouldZoom)
+    }, [])
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card placeholder={undefined}>
-                <div className='object-scale-down'>{props.image}</div>
+                    <div onClick={()=>handleZoomChange} className='object-scale-down'>
+                        <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
+                            <img src={props.image} alt={props.title} className="object-scale-down w-full h-40" />
+                        </ControlledZoom>
+                    </div>
                 <div className="p-4">
                     <h3 className="text-lg font-bold">{props.title}</h3>
                     <ReviewStars rating={4.96} reviewCount={22}/>
@@ -47,7 +94,41 @@ export const ItemCard: React.FC<ItemCardProps> = (props: ItemCardProps) => {
                     </p>
                     <div className='relative'>
                         <p className="text-lg font-bold">${props.price}</p>
-                        <Button color="indigo" ripple={true} placeholder={undefined}>Add to Cart</Button>
+                        <Button onClick={()=>onClick()} color="indigo" ripple={true} placeholder={undefined}>Add to Cart</Button>
+                    </div>
+                </div>
+            </Card>
+        </div>
+    );
+};
+
+
+
+export const DiscountedCard: React.FC<DiscountedCardProps> = (props: DiscountedCardProps) => {
+
+    const [isZoomed, setIsZoomed] = useState(false)
+
+    const handleZoomChange = useCallback(shouldZoom => {
+      setIsZoomed(shouldZoom)
+    }, [])
+
+    return (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Card placeholder={undefined}>
+                    <div onClick={()=>handleZoomChange} className='object-scale-down'>
+                        <ControlledZoom isZoomed={isZoomed} onZoomChange={handleZoomChange}>
+                            <img src={props.image.src} alt={props.title} className="object-scale-down w-full h-40" />
+                        </ControlledZoom>
+                    </div>
+                <div className="p-4">
+                    <h3 className="text-lg font-bold">{props.title}</h3>
+                    <ReviewStars rating={4.96} reviewCount={22}/>
+                    <p className="text-gray-700 mb-4">
+                        {props.description}
+                    </p>
+                    <div className='relative'>
+                        <DiscountedItem originalPrice={props.price} discountedPrice={props.newprice} />
+                        <Button onClick={()=>onClick()} color="indigo" ripple={true} placeholder={undefined}>Add to Cart</Button>
                     </div>
                 </div>
             </Card>

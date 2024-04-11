@@ -38,16 +38,17 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
+  id            String         @id @default(cuid()) @map("_id")
   name          String
-  username      String?   @unique @default(uuid())
+  username      String?        @unique @default(uuid())
   password      String?
-  email         String    @unique
+  email         String         @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  review        Review[]
+  role          String         @default("USER")
+  ShoppingCart  ShoppingCart[]
 }
 
 model VerificationToken {
@@ -67,30 +68,46 @@ model contactUS {
 }
 
 model Item {
-  id          String   @id @default(cuid()) @map("_id")
+  id          String     @id @default(cuid()) @map("_id")
   name        String
   description String
   price       Float
   quantity    Int
-  images      Image[]  @relation("ItemImage", name: "ItemImages")
-  reviews     Review[]
+  images      Image[]    @relation("ItemImage", name: "ItemImages")
+  CartItem    CartItem[]
 }
 
 model Image {
-  id     String @id @default(cuid()) @map("_id")
-  itemId String
-  type   String
-  filename    String // NAME OF THE FILE STORED ON S3
-  item   Item   @relation("ItemImage", name: "ItemImages", fields: [itemId], references: [id])
+  id       String @id @default(cuid()) @map("_id")
+  itemId   String
+  type     String
+  filename String // NAME OF THE FILE STORED ON S3
+  item     Item   @relation("ItemImage", name: "ItemImages", fields: [itemId], references: [id])
 }
-
 
 model Review {
   id      String @id @default(cuid()) @map("_id")
-  rating  Int
+  name String
+  rating Int
   comment String
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
-  item    Item   @relation(fields: [itemId], references: [id])
-  itemId  String
+  item  String
+}
+
+model ShoppingCart {
+  id        String     @id @default(cuid()) @map("_id")
+  userId    String
+  items     CartItem[] // Relation to the items in the shopping cart
+  createdAt DateTime   @default(now())
+
+  // Relation to the user
+  user User @relation(fields: [userId], references: [id])
+}
+
+model CartItem {
+  id       String       @id @default(cuid()) @map("_id")
+  quantity Int // Quantity of the item in the cart
+  item     Item         @relation(fields: [itemId], references: [id])
+  itemId   String // ID of the item in the cart
+  cart     ShoppingCart @relation(fields: [cartId], references: [id])
+  cartId   String // ID of the shopping cart
 }

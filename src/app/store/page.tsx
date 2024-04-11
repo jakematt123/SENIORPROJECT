@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Button } from '../_components/ClientExports';
+import React from 'react';
 import Navbar from '../_components/navbar/Navbar';
-import Image from 'next/image';
 import Footer from '../_components/footer/Footer';
-import { db } from '~/server/db';
 import deal1 from "../../../assets/deal1.jpg"
 import deal2 from "../../../assets/deal2.jpg"
 import deal3 from "../../../assets/deal3.jpg"
-import ItemCard from '../_components/store/itemcard';
-import { Client } from '../api/Client';
 import { CreateGrid } from '../_components/store/storeGrid';
+import 'react-medium-image-zoom/dist/styles.css'
+import { DiscountedCard, addToCart } from '../_components/store/itemcard';
+import { Client } from '../api/Client';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '~/server/auth';
 
+const session = await getServerSession(authOptions);
 
 export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
   return (
@@ -20,6 +21,23 @@ export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
     </div>
   );
 };
+
+export async function handleCLick(id: string) {
+  const itemResponse = await Client.dbRouter.getItemID.query({
+    itemName: id
+  })
+
+  if (!itemResponse) return;
+
+  const userResponse = await Client.userRouter.getUserbyName.query({
+    name: session?.user?.name || ''
+  })
+
+  if (!userResponse) return;
+
+  addToCart(itemResponse.id, 1, userResponse.id);
+
+}
 
 
 const ReviewStars = ({rating, reviewCount}) => {
@@ -44,72 +62,14 @@ const Home: React.FC = () => {
       <Navbar/>
 
       {/* Main Content */}
-      <main className="p-4">
+      <main className="p-4 space-y-5">
         <h2 className="text-2xl font-bold mb-4">Todays Deals</h2>
 
         {/* Product Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <Card placeholder={undefined}>
-            <Image
-              src={deal1}
-              alt="Home Weight Set"
-              className="object-scale-down w-full h-40"
-              width={500}
-              height={500}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-bold">Home Weight Set</h3>
-              <ReviewStars rating={4.96} reviewCount={22}/>
-              <p className="text-gray-700 mb-4">
-                Comes in 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 lb sets.
-              </p>
-              <div className='relative'>
-                <DiscountedItem originalPrice={40.99} discountedPrice={20.99} />
-                <Button color="indigo" ripple={true} placeholder={undefined}>Add to Cart</Button>
-              </div>
-              
-            </div>
-          </Card>
-          <Card placeholder={undefined}>
-            <Image
-              src={deal2}
-              alt="iPhone Charging Cable Valuepack"
-              className="object-scale-down w-full h-40"
-              width={500}
-              height={500}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-bold">Charing Cables</h3>
-              <ReviewStars rating={4.8} reviewCount={12}/>
-              <p className="text-gray-700 mb-4">
-                iPhone Charging Cable Valuepack - 3 cables included.
-              </p>
-              <div className='relative'>
-                <DiscountedItem originalPrice={29.99} discountedPrice={15.99} />
-                <Button color="indigo" ripple={true} placeholder={undefined}>Add to Cart</Button>
-              </div>
-            </div>
-          </Card>
-          <Card placeholder={undefined}>
-            <Image
-              src={deal3}
-              alt="No Show Men Socks"
-              className="object-scale-down w-full h-40"
-              width={500}
-              height={500}
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-bold">No Show Men Socks</h3>
-              <ReviewStars rating={4.5} reviewCount={8}/>
-              <p className="text-gray-700 mb-4">
-                No Show Men Socks, Low Cut Ankle Sock, Men Short Socks Casual Cotton Socks 
-              </p>
-              <div className='relative'>
-                <DiscountedItem originalPrice={25.95} discountedPrice={15.95} />
-                <Button color="indigo" ripple={true} placeholder={undefined}>Add to Cart</Button>
-              </div>
-            </div>
-          </Card>
+        <div className="">
+          <DiscountedCard image={deal1} title="Home Weight Set" description="Comes in 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 lb sets." price={40.99} newprice={20.99} quantity={100} />
+          <DiscountedCard image={deal2} title="iPhone Charging Cable Valuepack" description = "iPhone Charging Cable Valuepack - 3 cables included." price={29.99} newprice={15.99} quantity={100} />
+          <DiscountedCard image={deal3} title="No Show Mens Socks" description="No Show Men Socks, Low Cut Ankle Sock, Men Short Socks Casual Cotton Socks" price={25.95} newprice={15.95} quantity={100} />
         </div>
         <div>
           <h2 className="text-2xl font-bold mb-4">All Products</h2>

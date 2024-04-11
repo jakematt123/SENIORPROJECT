@@ -14,9 +14,7 @@ export async function GetImage(imagename: string) {
     });
 
     const imageUrl = URL.createObjectURL(new Blob([imageResponse as Uint8Array], { type: imageResponse.ContentType as string }));
-    return (
-        <img src={imageUrl} alt="Product Image" className="w-full h-64 object-scale-down" />
-    )
+    return imageUrl
 }
 
 const ProductForm: React.FC<ProductFormProps> = () => {
@@ -25,7 +23,7 @@ const ProductForm: React.FC<ProductFormProps> = () => {
     const [price, setPrice] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [image, setImage] = useState<File | null>(null);
-    const [imageComponent, setImageComponent] = useState<JSX.Element | null>(null);
+    const [imageComponent, setImageComponent] = useState<string | null>(null);
 
     interface image {
         data: Uint8Array;

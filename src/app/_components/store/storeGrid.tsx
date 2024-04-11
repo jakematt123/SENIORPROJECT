@@ -1,9 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Client } from "~/app/api/Client";
 import ItemCard from "./itemcard";
 import { GetImage } from "~/app/store/createitem/page";
+
 
 interface Item {
     id: string;
@@ -12,25 +13,26 @@ interface Item {
     price: number;
     quantity: number;
     images: { id: string; itemId: string; type: string; filename: string; }[];
+    imageUrl?: string;
 }
 
-async function fetchItems() {
-    const items: Item[] = await Client.dbRouter.getItems.query();
-    return items;
-}
-
-  
 export function CreateGrid() {
-    const [items, setItems] = useState<{ id: string; name: string; description: string; price: number; quantity: number; images: { id: string; itemId: string; type: string; filename: string; }[] }[]>([]);
+    const [items, setItems] = useState<Item[]>([]);
 
     useEffect(() => {
         async function fetchData() {
-            const data = await fetchItems();
-            setItems(data);
-        }
-        fetchData();
+            const fetchedItems: Item[] = await Client.dbRouter.getItems.query();
+            
+            const itemsWithImageUrls = await Promise.all(fetchedItems.map(async (item) => {
+                const imageUrl = await GetImage(item.images[0]?.filename ?? '');
+                return { ...item, imageUrl }; 
+            }));
 
-    console.log("fetched data")
+            setItems(itemsWithImageUrls);
+            console.log("fetched data");
+        }
+
+        fetchData();
     }, []);
   
     return (
@@ -39,7 +41,7 @@ export function CreateGrid() {
                 return (
                     <div key={item.id}>
                         <ItemCard
-                            image={await GetImage(item.images[0]?.filename ?? '')}
+                            image={item.imageUrl ?? ''}
                             title={item.name}
                             description={item.description}
                             price={item.price}
@@ -50,4 +52,5 @@ export function CreateGrid() {
             })}
         </div>
     );
-  }
+}
+

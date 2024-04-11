@@ -64,12 +64,113 @@ export const dbRouter = createTRPCRouter({
         return bytes;
        
     }),
-    getImageForCards: publicProcedure.input(z.object({
-        itemId: z.string()
+    addToCart: publicProcedure.input(z.object({
+        userId: z.string(),
+        itemId: z.string(),
+        quantity: z.number()
+    })).mutation(async ({ input }) => {
+        try {
+            // Find the user's shopping cart or create a new one if it doesn't exist
+            let shoppingCart = await db.shoppingCart.findUnique({
+                where: {
+                    id: input.userId, // Fix: Change 'userId' to 'id'
+                    userId: input.userId,
+                },
+                include: {
+                    items: true,
+                },
+            });
+        
+            if (!shoppingCart) {
+                shoppingCart = await db.shoppingCart.create({
+                    data: {
+                        userId: input.userId,
+                        items: { create: [] }, // Fix: Specify the type and assign an empty array
+                    },
+                }) as { items: { id: string; quantity: number; itemId: string; cartId: string; }[]; } & { id: string; userId: string; createdAt: Date; };
+            }
+
+            // Check if the item is already in the user's cart
+            const existingCartItem = shoppingCart.items.find((item) => item.itemId === input.itemId);
+        
+            if (existingCartItem) {
+                // If the item exists in the cart, update its quantity
+                await db.cartItem.update({
+                    where: {
+                        id: existingCartItem.id,
+                    },
+                    data: {
+                        quantity: existingCartItem.quantity + input.quantity,
+                    },
+                });
+            } else {
+                // If the item doesn't exist in the cart, create a new cart item
+                await db.cartItem.create({
+                    data: {
+                        quantity: input.quantity,
+                        itemId: input.itemId,
+                        cartId: shoppingCart.id,
+                    },
+                });
+            }
+        
+            console.log('Item added to cart successfully');
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+            throw error;
+        }
+
+    }),
+    getCart: publicProcedure.input(z.object({
+        userId: z.string()
     })).query(async ({ input }) => {
-        
-    })
-        
+        return await db.shoppingCart.findUnique({
+            where: {
+                id: input.userId, // Fix: Change 'userId' to 'id'
+            },
+            include: {
+                items: true,
+            },
+        });
+    }),
+    deleteItem: publicProcedure.input(z.object({
+        itemId: z.string()
+    })).mutation(async ({ input }) => {
+        await db.item.delete({
+            where: {
+                id: input.itemId
+            }
+        });
+    }),
+    getItemID: publicProcedure.input(z.object({
+        itemName: z.string()
+    })).query(async ({ input }) => {
+        return await db.item.findFirst({
+            where: {
+                name: input.itemName
+            }
+        });
+    }),
+    createReview: publicProcedure.input(z.object({
+        userId: z.string(),
+        itemId: z.string(),
+        rating: z.number(),
+        comment: z.string()
+    })).mutation(async ({ input }) => {
+        await db.review.create({
+            data: {
+                rating: input.rating,
+                comment: input.comment,
+                name: input.userId,
+                item: input.itemId
+            },
+        });
+    }),
+    getReviews: publicProcedure.query(async () => {
+        const data = await db.review.findMany();
+        return data;
+    }),
+
 
 
     //https://usfseniorproject2024.nyc3.digitaloceanspaces.com/diagnoldog.png
