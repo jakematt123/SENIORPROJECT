@@ -48,7 +48,6 @@ model User {
   accounts      Account[]
   sessions      Session[]
   role          String         @default("USER")
-  ShoppingCart  ShoppingCart[]
 }
 
 model VerificationToken {
@@ -74,7 +73,6 @@ model Item {
   price       Float
   quantity    Int
   images      Image[]    @relation("ItemImage", name: "ItemImages")
-  CartItem    CartItem[]
 }
 
 model Image {
@@ -95,19 +93,7 @@ model Review {
 
 model ShoppingCart {
   id        String     @id @default(cuid()) @map("_id")
-  userId    String
-  items     CartItem[] // Relation to the items in the shopping cart
-  createdAt DateTime   @default(now())
+  product      String
+  quantity  Int
 
-  // Relation to the user
-  user User @relation(fields: [userId], references: [id])
-}
-
-model CartItem {
-  id       String       @id @default(cuid()) @map("_id")
-  quantity Int // Quantity of the item in the cart
-  item     Item         @relation(fields: [itemId], references: [id])
-  itemId   String // ID of the item in the cart
-  cart     ShoppingCart @relation(fields: [cartId], references: [id])
-  cartId   String // ID of the shopping cart
 }

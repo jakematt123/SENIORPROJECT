@@ -4,6 +4,7 @@ import { s3Client } from "~/server/aws";
 import { db } from "~/server/db";
 import { z } from "zod";
 import { GetObjectCommand, type ObjectCannedACL, PutObjectCommand } from "@aws-sdk/client-s3";
+import { create } from "domain";
 
 
 // Make this a protectedProcedure after adding authentication
@@ -66,72 +67,12 @@ export const dbRouter = createTRPCRouter({
         return bytes;
        
     }),
-    addToCart: publicProcedure.input(z.object({
-        userId: z.string(),
-        itemId: z.string(),
-        quantity: z.number()
-    })).mutation(async ({ input }) => {
-        try {
-            // Find the user's shopping cart or create a new one if it doesn't exist
-            let shoppingCart = await db.shoppingCart.findUnique({
-                where: {
-                    id: input.userId, // Fix: Change 'userId' to 'id'
-                    userId: input.userId,
-                },
-                include: {
-                    items: true,
-                },
-            });
-        
-            if (!shoppingCart) {
-                shoppingCart = await db.shoppingCart.create({
-                    data: {
-                        userId: input.userId,
-                        items: { create: [] }, // Fix: Specify the type and assign an empty array
-                    },
-                }) as { items: { id: string; quantity: number; itemId: string; cartId: string; }[]; } & { id: string; userId: string; createdAt: Date; };
-            }
-
-            // Check if the item is already in the user's cart
-            const existingCartItem = shoppingCart.items.find((item) => item.itemId === input.itemId);
-        
-            if (existingCartItem) {
-                // If the item exists in the cart, update its quantity
-                await db.cartItem.update({
-                    where: {
-                        id: existingCartItem.id,
-                    },
-                    data: {
-                        quantity: existingCartItem.quantity + input.quantity,
-                    },
-                });
-            } else {
-                // If the item doesn't exist in the cart, create a new cart item
-                await db.cartItem.create({
-                    data: {
-                        quantity: input.quantity,
-                        itemId: input.itemId,
-                        cartId: shoppingCart.id,
-                    },
-                });
-            }
-        
-            console.log('Item added to cart successfully');
-        } catch (error) {
-            console.error('Error adding item to cart:', error);
-            throw error;
-        }
-
-    }),
     getCart: publicProcedure.input(z.object({
         userId: z.string()
     })).query(async ({ input }) => {
         return await db.shoppingCart.findUnique({
             where: {
                 id: input.userId, // Fix: Change 'userId' to 'id'
-            },
-            include: {
-                items: true,
             },
         });
     }),
@@ -178,6 +119,17 @@ export const dbRouter = createTRPCRouter({
         return await db.item.findFirst({
             where: {
                 name: input.name
+            }
+        });
+    }),
+    createCart: publicProcedure.input(z.object({
+        product: z.string(),
+        quantity: z.number(),
+    })).mutation(async ({ input }) => {
+        await db.shoppingCart.create({
+            data: {
+                product: input.product,
+                quantity: input.quantity,
             }
         });
     }),

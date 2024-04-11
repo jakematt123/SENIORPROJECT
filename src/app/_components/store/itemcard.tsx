@@ -18,19 +18,6 @@ export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
 };
 
 
-export async function addToCart(id: string, quantity: number, userId: string) {
-    Client.dbRouter.addToCart.mutate({
-        itemId: id,
-        quantity: quantity,
-        userId: userId
-    }).then((response) => {
-        console.log(response);
-    }).catch((error) => {
-        console.log(error);
-    });
-}
-
-
 const ReviewStars = ({rating, reviewCount}) => {
     return ( 
         <div className="flex items-center mb-2">
