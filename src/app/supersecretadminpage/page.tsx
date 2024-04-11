@@ -33,7 +33,6 @@ const AdminPage = async () => {
     return (
         <div>
             {session?.user.name === "thatswhatido" ? <AdminPageDetails /> : <h1 className='h-screen flex flex-col justify-center items-center text-2xl font-bold'>You are not an admin</h1>}
-            <AdminPageDetails />
         </div>
     );
 }
