@@ -80,7 +80,7 @@ model Image {
   id     String @id @default(cuid()) @map("_id")
   itemId String
   type   String
-  url    String // URL of the image stored in S3
+  filename    String // NAME OF THE FILE STORED ON S3
   item   Item   @relation("ItemImage", name: "ItemImages", fields: [itemId], references: [id])
 }
 

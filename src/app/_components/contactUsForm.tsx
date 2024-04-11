@@ -23,7 +23,7 @@ const ContactUsButton: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className="flex flex-col">
             <form onSubmit={(e) => {
                 e.preventDefault();
                 void CreateDatabaseButCooler(name, email, message, IamABot); setCongrats(true) 

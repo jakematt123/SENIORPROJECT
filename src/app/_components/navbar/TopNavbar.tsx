@@ -19,7 +19,6 @@ const location = "Tampa, FL"
 const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [search, setSearch] = useState<string>("");
-    const [isHovered, setIsHovered] = useState(false);
     const router = useRouter();
 
     // Do something with search here
@@ -96,8 +95,7 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                     {text: "Sell on Amazon", url: "/"},
                     {text: "Help", url: "/"},
                     {text: "Sign Out", url: "/"}
-                ]
-                }>
+                ]}>
                 <div className="flex flex-col items-start justify-center relative cursor-pointer">
                         <div onClick={() => session ? router.push(`/profiles/${session?.user.name}`) : router.push(`/api/auth/signin`)}>
                             <p className="text-xs text-lightText font-light">Hello, {session?.user ? session.user.name : "sign in"}</p>
@@ -112,7 +110,7 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                     <p className="text-xs text-lightText font-light">Returns</p>
                     <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
                 </div>
-                <div className="flex items-center headerHover relative">
+                <div onClick={()=>{router.push("/cart")}} className="flex items-center headerHover relative">
                     <FaShoppingCart className="mr-1 -mb-2 text-xl"/>
                     <p className="text-xs font-semibold mt-3 text-whiteText">
                         &nbsp;Cart 

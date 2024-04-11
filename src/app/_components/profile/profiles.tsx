@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaUser, FaMapMarker, FaShoppingCart, FaCog } from 'react-icons/fa';
-
 const Profiles = () => {
     return (
         <div className="flex">

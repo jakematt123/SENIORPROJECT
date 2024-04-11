@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Button } from '../_components/ClientExports';
 import Navbar from '../_components/navbar/Navbar';
 import Image from 'next/image';
@@ -7,6 +7,9 @@ import { db } from '~/server/db';
 import deal1 from "../../../assets/deal1.jpg"
 import deal2 from "../../../assets/deal2.jpg"
 import deal3 from "../../../assets/deal3.jpg"
+import ItemCard from '../_components/store/itemcard';
+import { Client } from '../api/Client';
+import { CreateGrid } from '../_components/store/storeGrid';
 
 
 export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
@@ -31,6 +34,7 @@ const ReviewStars = ({rating, reviewCount}) => {
     </div>
   );
 }
+
 
 
 const Home: React.FC = () => {
@@ -106,6 +110,10 @@ const Home: React.FC = () => {
               </div>
             </div>
           </Card>
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold mb-4">All Products</h2>
+          <CreateGrid />
         </div>
       </main>
       <Footer/>

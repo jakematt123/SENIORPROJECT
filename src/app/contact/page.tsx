@@ -8,7 +8,7 @@ const Contact: React.FC = () => {
 
     return (
 
-        <div className="flex-col">
+        <div className="flex-col h-screen w-screen">
             <Navbar/>
             <div className="my-6 mx-auto max-w-xl bg-white font-[sans-serif]">
                 <h1 className="text-3xl text-[#333] font-extrabold text-center">Contact Us</h1>
