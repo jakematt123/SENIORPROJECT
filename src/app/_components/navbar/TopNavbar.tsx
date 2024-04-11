@@ -11,40 +11,35 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { Session } from "next-auth";
+import { signIn, signOut } from "next-auth/react";
+import DropdownComponent from "./DropDown";
 const logo = "/RaysLogoTransparent.png"
 const location = "Tampa, FL"
 
 const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
-    const searchParams = useSearchParams();
-    const searchState = searchParams.get("search");
-    // State for dropdown
     const [showDropdown, setShowDropdown] = useState(false);
-    // State for search
     const [search, setSearch] = useState<string>("");
-    // Router
     const router = useRouter();
 
     // Do something with search here
-    function searchAction(search: string): void {
-        if(!search.length) {
-            router.push("/contact");
-        } else {
-            alert("You searched for: " + search);
-        }
+    function searchAction(search: string, event?: React.KeyboardEvent): void {
+        console.log(search, event?.key, search.length)
+        if(event?.key !== "Enter" || !search.length) return;
+        if(!search.length) return
+        console.log("searching...")
+        router.push(`/store/${search.toLowerCase()}`)
         
     }
 
-    // This is probably not needed just keeps routing organized
-    function route(route: string): void {
-        router.push(route); 
-    }
-    
     return (
-        <div className="w-full">
-            <div className="bg-amazon_blue text-white px-4 py-3 flex item-center gap-4 sticky top-0">
+        <div className="w-full xs:w-fit">
+            <div className="bg-amazon_blue text-white px-4 py-3 flex item-center gap-4">
                 {/* Logo Div */}
-                <div onClick={()=> route("/")} className="px-2 overflow-hidden flex items-center border-2 border-amazon_light hover:border-white cursor-pointer duration-100 bg-gradient-to-r from-amazon_blue to-amazon_light">
-                    <Image className="w-24 h-9 object-scale-down" src={logo} width={595} height={439} alt="Logo"/>
+                <div onClick={()=> router.push("/")} className="px-2 overflow-hidden flex items-center border-2 border-amazon_light hover:border-white cursor-pointer duration-100 bg-gradient-to-r from-amazon_blue to-amazon_light">
+                    <div className="w-24 h-9 object-contain">
+                        <Image className="object-contain sm:w-24 sm:h-9 aspect-auto" src={logo} width={595} height={439} alt="Logo"/>
+                    </div>
+                    
                 </div>
                 <div className="headerHover">
                     <LiaMapMarkerAltSolid />
@@ -56,7 +51,8 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                     </p>
                 </div>
                 <div className="h-10 rounded-md flex flex-grow relative">
-                    <span onClick={()=>setShowDropdown(!showDropdown)} className="w-14 h-full bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-300 text-sm text-amazon_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md"
+                    <span onClick={()=>setShowDropdown(!showDropdown)} 
+                    className="w-14 h-full bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-300 text-sm text-amazon_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md"
                     >All&nbsp;
                         <span><IoMdArrowDropdown /></span>
                     </span>
@@ -73,49 +69,48 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                             </div>
                         )
                     }
+
                     <input 
                         type="search"
-                        className="h-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
+                        className="w-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search here..."
+                        onKeyDown={(e) => {searchAction(search, e)}}
+                        placeholder="Search for items here..."
                     />
-                    <Link
-                    href={searchState ? `?search=${search}` : `?search=${search}`}
-                    onClick={()=>searchAction(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
-                        <IoSearch />
-                    </Link>
+
+
+                    <div
+                        onClick={()=>searchAction(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
+                            <IoSearch />
+                    </div>
+                    
                 </div>
                 
-                    {
-                        session ? (
-                            <div onClick={() => route("/contact")} className="flex flex-col items-start justify-center headerHover">
-                                <p className="text-xs text-lightText font-light">Hello, {session.user.name}</p>
-                                <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
-                                Account & Lists&nbsp; 
-                                <span>
-                                    <IoMdArrowDropdown />
-                                </span>
-                                </p>
-                            </div>
-                        ) : (
-                            <div onClick={() => route("/api/auth/signin")} className="flex flex-col items-start justify-center headerHover">
-                                <p className="text-xs text-lightText font-light">Hello, sign in</p>
-                                <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
-                                Account & Lists&nbsp; 
-                                <span>
-                                    <IoMdArrowDropdown />
-                                </span>
-                                </p>
-                            </div>
-                        )
-                    }
-                   
+                <DropdownComponent id={"login"} items={[
+                    (session ? {text: "Sign Out", url: "/api/auth/signout"} : {text: "Sign In", url: "/api/auth/signin"}),
+                    {text: "Your Orders", url: "/"},
+                    {text: "Your Lists", url: "/"},
+                    {text: "Your Account", url: "/"},
+                    {text: "Sell on Amazon", url: "/"},
+                    {text: "Help", url: "/"},
+                    {text: "Sign Out", url: "/"}
+                ]}>
+                <div className="flex flex-col items-start justify-center relative cursor-pointer">
+                        <div onClick={() => session ? router.push(`/profiles/${session?.user.name}`) : router.push(`/api/auth/signin`)}>
+                            <p className="text-xs text-lightText font-light">Hello, {session?.user ? session.user.name : "sign in"}</p>
+                            <p className="flex items-center text-sm font-semibold -mt-1 text-whiteText">
+                                Account & Lists&nbsp;<span><IoMdArrowDropdown /></span>
+                            </p>
+                        </div>
+                </div>
+                    
+                </DropdownComponent>
                 <div className="flex flex-col items-start justify-center headerHover">
                     <p className="text-xs text-lightText font-light">Returns</p>
                     <p className="text-sm font-semibold -mt-1 text-whiteText">& Orders</p>
                 </div>
-                <div className="flex items-center headerHover relative">
+                <div onClick={()=>{router.push("/cart")}} className="flex items-center headerHover relative">
                     <FaShoppingCart className="mr-1 -mb-2 text-xl"/>
                     <p className="text-xs font-semibold mt-3 text-whiteText">
                         &nbsp;Cart 
@@ -126,6 +121,7 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                 </div>
             </div>
             <Bottomnavbar />
+            
         </div>
     )
 }
