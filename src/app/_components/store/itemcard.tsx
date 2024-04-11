@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Button, Card } from '../ClientExports';
-import Image from 'next/image';
 
 
 export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
