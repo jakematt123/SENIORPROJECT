@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Client } from "~/app/api/Client";
 import ItemCard from "./itemcard";
 import { GetImage } from "~/app/store/createitem/page";
@@ -32,7 +32,9 @@ export function CreateGrid() {
             console.log("fetched data");
         }
 
-        fetchData();
+        void fetchData().catch((error) => {
+            console.error(error);
+        });
     }, []);
   
     return (

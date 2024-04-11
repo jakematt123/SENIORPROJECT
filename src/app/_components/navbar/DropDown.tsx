@@ -9,7 +9,7 @@ interface MenuItem {
 }
 
 const DropdownComponent: React.FC<{id: string, session?: Session | null, children, items: MenuItem[]}> = ({ id, session, children, items}) => {
-    const [dropDownStates, setDropdownStates] = useState<boolean[]>(new Array().fill(false));
+    const [dropDownStates, setDropdownStates] = useState<boolean[]>([]);
 
     const handleDropDownVisibility = (id: string, isVisible: boolean) => {
         setDropdownStates((prevState) => {

@@ -7,12 +7,11 @@ import { listItems } from "../../_constants/TopBarListItems";
 import { LiaMapMarkerAltSolid } from "react-icons/lia";
 import { FaShoppingCart } from "react-icons/fa";
 import Bottomnavbar from "./Bottomnavbar";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import type { Session } from "next-auth";
-import { signIn, signOut } from "next-auth/react";
 import DropdownComponent from "./DropDown";
+import { Client } from "~/app/api/Client";
 const logo = "/RaysLogoTransparent.png"
 const location = "Tampa, FL"
 
@@ -22,12 +21,13 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
     const router = useRouter();
 
     // Do something with search here
-    function searchAction(search: string, event?: React.KeyboardEvent): void {
+    async function searchAction(search: string, event?: React.KeyboardEvent): Promise<void> {
         console.log(search, event?.key, search.length)
         if(event?.key !== "Enter" || !search.length) return;
         if(!search.length) return
         console.log("searching...")
-        router.push(`/store/${search.toLowerCase()}`)
+        const data = await Client.dbRouter.getItemByName.query({name: search});
+        alert(JSON.stringify(data));
         
     }
 
@@ -75,13 +75,13 @@ const TopNavbar: React.FC<{ session: Session | null }> = ({ session }) => {
                         className="w-full text-base text-amazon_blue flex-grow outline-none border-none px-2"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        onKeyDown={(e) => {searchAction(search, e)}}
+                        onKeyDown={(e) => {void searchAction(search, e)}}
                         placeholder="Search for items here..."
                     />
 
 
                     <div
-                        onClick={()=>searchAction(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
+                        onClick={()=> void searchAction(search)} className="w-12 h-full flex items-center justify-center bg-amazon_yellow hover:bg-[#f3a847] duration-300 text-amazon_blue cursor-pointer rounded-tr-md rounded-br-md">
                             <IoSearch />
                     </div>
                     

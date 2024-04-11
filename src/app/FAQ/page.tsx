@@ -1,4 +1,3 @@
-import { IoMdArrowDropdown } from "react-icons/io";
 import React from "react"
 import Navbar from "../_components/navbar/Navbar"
 import Footer from "../_components/footer/Footer"
@@ -19,7 +18,7 @@ const FAQ: React.FC = () => {
           
           <div className="mb-10">
             <h2 className="text-left">
-              Discover a revolution in online shopping with Amazooma. Explore a curated collection of products spanning electronics, fashion, home essentials, and more—all at your fingertips. With intuitive navigation, top-notch security, and unparalleled customer service, we're here to redefine your shopping experience. Join us and experience the difference with Amazooma today. Welcome to a new era of shopping. Welcome to Amazooma.
+              Discover a revolution in online shopping with Amazooma. Explore a curated collection of products spanning electronics, fashion, home essentials, and more—all at your fingertips. With intuitive navigation, top-notch security, and unparalleled customer service, we`&apos;`re here to redefine your shopping experience. Join us and experience the difference with Amazooma today. Welcome to a new era of shopping. Welcome to Amazooma.
             </h2>
           </div>
           
@@ -48,7 +47,7 @@ const FAQ: React.FC = () => {
     <div className="text-center mb-4 px-40">
       <h1 className="text-left text-2xl">What payment methods are accepted on Amazooma?</h1>
       {/* Put the arrow here */}
-      <h2>We accept a variety of payment methods to accommodate our customers' preferences. These include major credit and debit cards, as well as secure online payment platforms such as PayPal. Rest assured that your payment information is encrypted and protected for a secure transaction.</h2>
+      <h2>We accept a variety of payment methods to accommodate our customers`&apos;` preferences. These include major credit and debit cards, as well as secure online payment platforms such as PayPal. Rest assured that your payment information is encrypted and protected for a secure transaction.</h2>
     </div>
     
     <div className="text-center mb-4 px-40">
@@ -58,7 +57,7 @@ const FAQ: React.FC = () => {
     </div>
     
     <div className="text-center mb-4 px-40">
-      <h1 className="text-left text-2xl">What is Amazooma's return policy?</h1>
+      <h1 className="text-left text-2xl">What is Amazooma`&apos;`s return policy?</h1>
       {/* Put the arrow here */}
       <h2>We want you to be completely satisfied with your purchase from Amazooma. If for any reason you are not happy with your order, you may return it within 30 days of receipt for a refund or exchange. Please note that certain restrictions may apply, so we recommend reviewing our Return Policy for more details.</h2>
     </div>

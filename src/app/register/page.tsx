@@ -2,6 +2,7 @@
 "use client"
 
 import { useState } from 'react';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -10,16 +11,18 @@ export default function Register() {
     password: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { name: string; value: string; }; }) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    // You can handle form submission here, such as sending the data to your backend for registration
+    if(formData.password.length < 8) {
+      alert('Password must be at least 8 characters long');
+    }
     console.log(formData);
     // Reset form fields after submission
     setFormData({
@@ -80,6 +83,7 @@ export default function Register() {
                 onChange={handleChange}
               />
             </div>
+            <PasswordStrengthBar password={formData.password} />
           </div>
           <div>
             <button

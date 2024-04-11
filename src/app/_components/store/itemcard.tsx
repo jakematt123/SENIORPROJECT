@@ -6,12 +6,7 @@ import { Controlled as ControlledZoom } from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css'
 import { StaticImageData } from 'next/image';
 import { Client } from '~/app/api/Client';
-import { useSession } from 'next-auth/react';
-import { Session } from 'next-auth';
-import { handleCLick } from '~/app/store/page';
-import { useRouter } from 'next/navigation';
 
-const router = useRouter();
 
 export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
     return (
@@ -74,7 +69,7 @@ export const ItemCard: React.FC<ItemCardProps> = (props: ItemCardProps) => {
 
     const [isZoomed, setIsZoomed] = useState(false)
 
-    const handleZoomChange = useCallback(shouldZoom => {
+    const handleZoomChange = useCallback((shouldZoom: boolean | ((prevState: boolean) => boolean)) => {
       setIsZoomed(shouldZoom)
     }, [])
 
@@ -108,7 +103,7 @@ export const DiscountedCard: React.FC<DiscountedCardProps> = (props: DiscountedC
 
     const [isZoomed, setIsZoomed] = useState(false)
 
-    const handleZoomChange = useCallback(shouldZoom => {
+    const handleZoomChange = useCallback((shouldZoom: boolean | ((prevState: boolean) => boolean)) => {
       setIsZoomed(shouldZoom)
     }, [])
 

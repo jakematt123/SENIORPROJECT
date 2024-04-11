@@ -1,23 +1,26 @@
 "use client"
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable  @typescript-eslint/no-explicit-any */ 
+/* eslint-disable  @typescript-eslint/no-unsafe-assignment */ 
 
 import React, { useState } from 'react';
 import { Client } from '~/app/api/Client';
 
-interface ProductFormProps {}
 
-export async function GetImage(imagename: string) {
+export async function GetImage(imagename: string): Promise<string> {
     const imageResponse = await Client.dbRouter.getImage.query({
         Bucket: "usfseniorproject2024",
         Key: imagename
     }).catch((error) => {
-        return error;
+        return error as string;
     });
 
-    const imageUrl = URL.createObjectURL(new Blob([imageResponse as Uint8Array], { type: imageResponse.ContentType as string }));
-    return imageUrl
+    const imageUrl = imageResponse ? URL.createObjectURL(new Blob([imageResponse as Uint8Array], { type: (imageResponse as any)?.type })) : '';
+    return imageUrl;
 }
 
-const ProductForm: React.FC<ProductFormProps> = () => {
+
+const ProductForm: React.FC = () => {
     const [productName, setProductName] = useState<string>('');
     const [quantity, setQuantity] = useState<string>('');
     const [price, setPrice] = useState<string>('');
@@ -30,7 +33,7 @@ const ProductForm: React.FC<ProductFormProps> = () => {
         mimeType: string;
     }
 
-    async function imageToBinary(file, mimeType) {
+    async function imageToBinary(file: Blob, mimeType: string) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
     
@@ -81,19 +84,6 @@ const ProductForm: React.FC<ProductFormProps> = () => {
 
 
 
-    
-
-    
-
-    const handleButtonClick = async (filename: string = "22565.png") => {
-        try {
-            const imageComponent = await GetImage(filename);
-            setImageComponent(imageComponent);
-        } catch (error) {
-            console.error('Error fetching image:', error);
-        }
-    };
-
 
     return (
         <div>
@@ -118,7 +108,7 @@ const ProductForm: React.FC<ProductFormProps> = () => {
                     </div>
                     <div className="mb-4">
                         <label htmlFor="image" className="block text-gray-600 font-semibold mb-1">Image Upload</label>
-                        <input type="file" id="image" name="image" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] || null)} className="form-input w-full" />
+                        <input type="file" id="image" name="image" accept="image/*" onChange={(e) => setImage(e.target.files?.[0] ?? null)} className="form-input w-full" />
                     </div>
                     <div className="mt-6">
                         <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit</button>

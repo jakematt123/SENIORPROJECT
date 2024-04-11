@@ -11,7 +11,6 @@ import { Client } from '../api/Client';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '~/server/auth';
 
-const session = await getServerSession(authOptions);
 
 export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
   return (
@@ -23,6 +22,7 @@ export const DiscountedItem = ({ originalPrice, discountedPrice }) => {
 };
 
 export async function handleCLick(id: string) {
+  const session = await getServerSession(authOptions);
   const itemResponse = await Client.dbRouter.getItemID.query({
     itemName: id
   })
@@ -30,12 +30,12 @@ export async function handleCLick(id: string) {
   if (!itemResponse) return;
 
   const userResponse = await Client.userRouter.getUserbyName.query({
-    name: session?.user?.name || ''
+    name: session?.user?.name ?? ''
   })
 
   if (!userResponse) return;
 
-  addToCart(itemResponse.id, 1, userResponse.id);
+  void addToCart(itemResponse.id, 1, userResponse.id);
 
 }
 

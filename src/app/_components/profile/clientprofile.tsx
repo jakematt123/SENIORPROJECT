@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import PasswordStrengthBar from "react-password-strength-bar";
 
 export const ChangePasswordForm: React.FC = () => {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -10,6 +11,16 @@ export const ChangePasswordForm: React.FC = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       // Add your form submission logic here, such as validating passwords and sending a request to change the password
+      if (newPassword !== confirmNewPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        alert('Password must be at least 8 characters long');
+        return;
+      }
+
       alert('Password changed successfully!');
     };
   
@@ -42,6 +53,7 @@ export const ChangePasswordForm: React.FC = () => {
               required
             />
           </div>
+          <PasswordStrengthBar password={newPassword} />
           <div className="mt-4">
             <label htmlFor="confirmNewPassword" className="block text-lg font-semibold mb-2">Confirm New Password</label>
             <input

@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaUser, FaMapMarker, FaShoppingCart, FaCog } from 'react-icons/fa';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '~/server/auth';
 import { ChangePasswordForm } from './clientprofile';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const Profiles = async () => {
     const session = await getServerSession(authOptions);
-    
     return (
+        
         <div className="flex">
             {/* Left side with the list */}
             <div className="w-1/3 border-r p-4">
@@ -52,7 +53,7 @@ const Profiles = async () => {
                 <div className="border rounded-lg p-4 bg-gray-100">
                     <h2 className="text-3xl mb-4">User Information</h2>
                     <p className="text-lg">
-                       You are a user
+                       {session?.user.name === "thatswhatido" ? "You are an admin" : "You are an user" }
                     </p>
                 </div>
             </div>
@@ -60,6 +61,6 @@ const Profiles = async () => {
         </div>
     );
 };
-  
+   
 
 export default Profiles;

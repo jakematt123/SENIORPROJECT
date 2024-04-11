@@ -35,6 +35,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^5.0.1",
     "react-medium-image-zoom": "^5.2.0",
+    "react-password-strength-bar": "^0.4.1",
     "react-slick": "^0.30.1",
     "server-only": "^0.0.1",
     "sharp": "^0.33.2",

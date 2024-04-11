@@ -3,8 +3,7 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { s3Client } from "~/server/aws";
 import { db } from "~/server/db";
 import { z } from "zod";
-import { GetObjectCommand, ObjectCannedACL, PutObjectCommand } from "@aws-sdk/client-s3";
-import { get } from "http";
+import { GetObjectCommand, type ObjectCannedACL, PutObjectCommand } from "@aws-sdk/client-s3";
 
 
 // Make this a protectedProcedure after adding authentication
@@ -13,7 +12,10 @@ export const dbRouter = createTRPCRouter({
         name: z.string(),
         description: z.string(),
         price: z.number(),
-        image: z.any(),
+        image: z.object({
+            filename: z.string(),
+            type: z.string()
+        }),
         quantity: z.number()
     })).mutation(async ({ input }) => {
         await db.item.create({
@@ -60,7 +62,7 @@ export const dbRouter = createTRPCRouter({
             Key: input.Key,
         }));
         if(!response.Body) return;
-        let bytes = await response.Body.transformToByteArray();
+        const bytes = await response.Body.transformToByteArray();
         return bytes;
        
     }),
@@ -169,6 +171,15 @@ export const dbRouter = createTRPCRouter({
     getReviews: publicProcedure.query(async () => {
         const data = await db.review.findMany();
         return data;
+    }),
+    getItemByName: publicProcedure.input(z.object({
+        name: z.string()
+    })).query(async ({ input }) => {
+        return await db.item.findFirst({
+            where: {
+                name: input.name
+            }
+        });
     }),
 
 

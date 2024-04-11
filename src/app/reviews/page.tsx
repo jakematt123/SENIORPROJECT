@@ -29,7 +29,7 @@ useEffect(() => {
         }
     };
 
-        fetchReviews(); // Call the fetchReviews function on component mount
+      void fetchReviews(); // Call the fetchReviews function on component mount
     }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

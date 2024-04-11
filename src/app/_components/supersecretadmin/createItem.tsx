@@ -19,7 +19,7 @@ const NewItemForm: React.FC<NewItemFormProps> = ({ onSubmit }) => {
     image: null,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setNewItem(prevItem => ({
       ...prevItem,
@@ -28,7 +28,7 @@ const NewItemForm: React.FC<NewItemFormProps> = ({ onSubmit }) => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null; // Ensure the image is either a File object or null
+    const file = e.target.files?.[0] ?? null; // Ensure the image is either a File object or null
     setNewItem(prevItem => ({
       ...prevItem,
       image: file
