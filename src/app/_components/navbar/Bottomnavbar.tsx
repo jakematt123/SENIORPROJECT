@@ -43,7 +43,7 @@ const Bottomnavbar: React.FC = () => {
                         <motion.div ref={ref} initial={{x:-500}} animate={{x:0}} transition={{duration:0.3}} exit={{x:-500}} className="w-[365px] h-full bg-white border border-black absolute top-0 left-0">
                             <div className="w-full bg-amazon_light text-white py-2 px-6 flex items-center gap-3">
                                 <RiAccountCircleFill className="text-3xl"/>
-                                <h3 className="font-titleFont font-bold text-lg tracking-wide">Hello, sign In</h3>
+                                <h3 className="font-titleFont font-bold text-lg tracking-wide">Hello!</h3>
                             </div>
                             <SideBarContent title={"Trending"} items={["Best Sellers", "New Releases"]} />
                             <SideBarContent title={"Shop by Department"} items={["Clothing", "Technology", "Textiles", "Furniture", "Food"]} />
