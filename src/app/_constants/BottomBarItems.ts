@@ -3,5 +3,5 @@ export const bottomBarItems = [
     {text: "Customer Service", url: "/contact"},
     {text: "FAQ", url: "/FAQ"},
     {text: "Store", url: "/store"},
-    {text: "Sell", url: "/contact"},
+    {text: "Sell", url: "/store/createitem"},
 ]
